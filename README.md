@@ -6,11 +6,11 @@
 
 * このように月次の取引成績とコメントがグラフで出ます
 
-![img](./img/thumnail-yearly.png)
+![img](./img/thumbnail-yearly.png)
 
-![img](./img/thumnail-monthly.png)
+![img](./img/thumbnail-monthly.png)
 
-![img](./img/thumnail-daily.png)
+![img](./img/thumbnail-daily.png)
 
 ## 構成
 
@@ -27,7 +27,7 @@
   * Netlify : https://app.netlify.com/sites/goofy-bohr-20d740/overview
   * GraphCMS : https://app.graphcms.com/a83c9f9e7dae4541a8c6e1ac08a9495f/master/settings/project
   * AWS : https://console.aws.amazon.com/route53/v2/hostedzones#ListRecordSets/Z08256261BDETXBUSKFLN
-  * Github Workflow(CI) : https://github.com/Eigo-Mt-Fuji/portfolio-2021/tree/main/.github/workflows
+  * Github Workflow(CI) : https://github.com/Eigo-Mt-Fuji/fx-report/tree/master/.github/workflows
 
 * Tool
   * Python
