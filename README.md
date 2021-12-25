@@ -2,8 +2,11 @@
 
 ## 概要
 
-* SBI FX月次レポート
-  * https://www.efgriver.com/fx-reports/
+* SBI FX取引の月次レポートのDIYアプリです
+
+* このように月次の取引成績とコメントがグラフで出ます
+
+![img](./docs/thumnail.png)
 
 ## 構成
 
