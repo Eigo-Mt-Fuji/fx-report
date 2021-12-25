@@ -1,7 +1,7 @@
 {
-  "name": "portfolio-2021",
+  "name": "fx-report",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "A simple web application for graphical reporting your fx trading history.",
   "version": "0.1.0",
   "author": "Eigo Fujikawa",
   "dependencies": {
@@ -70,9 +70,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Eigo-Mt-Fuji/portfolio-2021"
+    "url": "https://github.com/Eigo-Mt-Fuji/fx-report"
   },
   "bugs": {
-    "url": "https://github.com/Eigo-Mt-Fuji/portfolio-2021/issues"
+    "url": "https://github.com/Eigo-Mt-Fuji/fx-report/issues"
   }
 }
