@@ -1,0 +1,6 @@
+{
+    "presets": [
+      // https://www.npmjs.com/package/babel-preset-gatsby
+      "babel-preset-gatsby"
+    ]
+}
