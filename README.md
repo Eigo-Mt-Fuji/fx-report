@@ -6,7 +6,7 @@
 
 * このように月次の取引成績とコメントがグラフで出ます
 
-![img](./docs/thumnail.png)
+![img](./img/thumnail.png)
 
 ## 構成
 
