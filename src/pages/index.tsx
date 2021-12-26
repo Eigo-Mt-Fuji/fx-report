@@ -27,33 +27,7 @@ const IndexPage: () => any = ()=> {
                       </Card.Body>
                     </Card>
                   </Col>
-                  <Col sm="auto">
-                    <Card style={{ width: '18rem' }}>
-                      <Card.Header>プレイグラウンド</Card.Header>
-                      <Card.Body>
-                        <Card.Text>ちゃらんぽらん遊ぶぜ</Card.Text>
-                        <Button variant="primary" href="/my-playgrounds/">Open</Button>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                  <Col sm="auto">
-                    <Card style={{ width: '18rem' }}>
-                      <Card.Header>所持品</Card.Header>
-                      <Card.Body>
-                        <Card.Text>倒すと手に入ります</Card.Text>
-                        <Button variant="primary" href="/my-bags/">Open</Button>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                  <Col sm="auto">
-                    <Card style={{ width: '18rem' }}>
-                      <Card.Header>お気に入り</Card.Header>
-                      <Card.Body>
-                        <Card.Text>QRコードのデジタルサイネージ</Card.Text>
-                        <Button variant="primary" href="/digital-signages/">Open</Button>
-                      </Card.Body>
-                    </Card>
-                  </Col>
+                 
               </Row>
           </Container>
         </section>
