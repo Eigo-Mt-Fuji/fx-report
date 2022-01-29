@@ -3,8 +3,8 @@ const path = require(`path`)
 
 module.exports = {
   siteMetadata: {
-    title: `portfolio 2021`,
-    description: `Annual portfolio on 2021 powered by me`,
+    title: `fx-report 202X`,
+    description: `Annual FX portfolio on 202X powered by me`,
     author: `@efg.river`,
   },
   plugins: [
