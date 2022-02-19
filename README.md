@@ -23,6 +23,7 @@
 ## 技術スタック
 
 * Frontend
+  * NodeJs>=15
   * Gatsby, React Bootstrap, Rechart, Mapbox
 
 * Backend
@@ -36,6 +37,9 @@
       * [validate-fx-buysell-order](./scripts/validate-fx-buysell-order.py)
         * SBIから取得したCSV内に、実施した覚えのない決済売が2回連続するという不整合があったので検知する処理をスクリプト化
         * push時にgithub上で以下のように実行・エラーを検知
+  * Analytics
+     * Gtag https://analytics.google.com/analytics/web/?authuser=0#/a221044200p304415269/admin/streams/table/
+     * Optimize Container https://optimize.google.com/optimize/home/#/accounts/4704735488/containers/15058710
 
 ## 備考
 

@@ -75,5 +75,8 @@
   },
   "bugs": {
     "url": "https://github.com/Eigo-Mt-Fuji/fx-report/issues"
+  },
+  "engines": {
+    "node": ">=15"
   }
 }
