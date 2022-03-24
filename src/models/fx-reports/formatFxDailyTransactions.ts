@@ -23,6 +23,7 @@ function processTransactionBuffer(buffer: any[]) {
 
     // 建玉の新規売買取引レコードを探す
     const openInterestRecord: FxTransactionDataRecord = getOpenInterestRecord(buffer);
+
     // 決済取引レコードを探す
     const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
     
@@ -30,13 +31,12 @@ function processTransactionBuffer(buffer: any[]) {
         const date: string = record.date.split(' ')[0];
         // see https://momentjs.com/docs/#/parsing/string-format/
         const aggregateKey: string = moment(date, 'YYYY/MM/DD').format('MM/DD');
-        const buysell:
 
         // 獲得利益(損失)は、決済レコードのtotal_pl列を参照
         const profit =  record.total_pl;
 
-        // pipsは売買の種別ごとに計算 (決済売の場合、決済時の為替 - 買建時の為替が利益になる(マイナスの場合は損失))
         // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+        // pipsは売買の種別ごとに計算 (決済売の場合、決済時の為替 - 買建時の為替が利益になる(マイナスの場合は損失))
         const sign: number = record.buysell === '決済売' ? 1 : -1;
         const pips = sign * Math.round(100 * (record.price - openInterestRecord.price);
 
@@ -60,7 +60,7 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
             // 
             buffer.push(item);
             // 建玉の新規売買のレコードの場合
-            if (item.buysell === '新規売' || item.buysell == '新規買') { 
+            if (item.buysell === '新規売' || item.buysell === '新規買') { 
 
                 // 取引を１セット分処理する
                 const context = processTransactionBuffer(buffer);
