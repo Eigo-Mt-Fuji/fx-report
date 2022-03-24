@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { FxTransactionsData, FxTransactionDataRecord } from '../../types';
+const _ = require('lodash');
 
 function getOpenInterestRecord(buffer: any[]) : FxTransactionDataRecord {
     
@@ -92,7 +93,8 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
             // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/length#try_it
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#syntax
             const aggregatedContext = contexts.length === 1 ? contexts[0] : contexts.reduce( (previousValue, currentValue) => {
-                if (empty(previousValue)) {
+                // https://lodash.com/docs/#isEmpty
+                if (_.isEmpty(previousValue)) {
                     return currentValue;
                 }
                 // 集約
