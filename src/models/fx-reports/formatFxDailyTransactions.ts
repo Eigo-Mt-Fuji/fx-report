@@ -71,9 +71,20 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
             }
         });
 
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/groupBy#examples
-        const groupedTransactionContexts = transactionContexts.groupBy( (context) => context.name );
-        
+        // Array#groupByはexperimentalなのでnodejsでは3/24時点で使えない https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/groupBy#examples
+        // 代わりにreduce
+        const groupedTransactionContexts = transactionContexts.reduce( (previous, current) => {
+            const aggregateKey: string = current.name;
+            if (aggregateKey in previous) {
+
+                previous[aggregateKey].push(current);
+            }else {
+                
+                previous[aggregateKey] = [];
+                previous[aggregateKey].push(current);
+            }
+            return previous;
+        }, {})
         // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#try_it
         for (const [aggregateKey, contexts] of Object.entries(groupedTransactionContexts)) {
             
