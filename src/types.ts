@@ -36,6 +36,7 @@ export interface FxTransactionDataRecord {
     date: string;
     total_pl: number;
     buysell: string;
+    price: number;
 } 
 export interface FxCurrentState {
     deposit: number;
