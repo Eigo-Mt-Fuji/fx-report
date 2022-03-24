@@ -84,7 +84,7 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
                 previous[aggregateKey].push(current);
             }
             return previous;
-        }, {})
+        }, {});
         // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#try_it
         for (const [aggregateKey, contexts] of Object.entries(groupedTransactionContexts)) {
             
