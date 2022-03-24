@@ -1,38 +1,103 @@
 import moment from 'moment';
 import { FxTransactionsData } from '../../types';
 
+interface FxTransactionDataRecord {
+    
+    date: string;
+    total_pl: number;
+    buysell: string;
+}
+
+function getOpenInterestRecord(buffer: any[]) : FxTransactionDataRecord {
+    
+    return buffer.filter( (item) => {
+
+        return item.buysell == '新規売' || item.buysell == '新規買';
+    });
+}
+function getSettlementOrderRecords(buffer: any[]) : FxTransactionDataRecord[] {
+
+    return buffer.filter( (item) => {
+
+        return item.buysell == '決済売' || item.buysell == '決済買';
+    });
+}
+
+/**
+ * 決済売買の日付を元に日毎の取引実績を集計する
+ */
+function processTransactionBuffer(buffer: any[]) {
+
+    // 建玉の新規売買取引レコードを探す
+    const openInterestRecord: FxTransactionDataRecord = getOpenInterestRecord(buffer);
+    // 決済取引レコードを探す
+    const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
+    
+    return settlementOrderRecords.map( (record: FxTransactionDataRecord) => {
+        const date: string = record.date.split(' ')[0];
+        // see https://momentjs.com/docs/#/parsing/string-format/
+        const aggregateKey: string = moment(date, 'YYYY/MM/DD').format('MM/DD');
+        const buysell:
+
+        // 獲得利益(損失)は、決済レコードのtotal_pl列を参照
+        const profit =  record.total_pl;
+
+        // pipsは売買の種別ごとに計算 (決済売の場合、決済時の為替 - 買建時の為替が利益になる(マイナスの場合は損失))
+        // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/round
+        const sign: number = record.buysell === '決済売' ? 1 : -1;
+        const pips = sign * Math.round(100 * (record.price - openInterestRecord.price);
+
+        return {
+            name: aggregateKey,
+            profit: parseInt(profit),
+            pips: pips
+        };
+    });
+}
+
 function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
 
     const res = data.allFxTransactionsData.nodes.map( (node) => {
-        const results: any = {};
+        const results: any[] = [];
+        const earnContexts: any[] = []
 
-        for( let i = 0; i < node.items.length; i+= 2) {
-            const date = node.items[i].date.split(' ')[0];
-            if ( !date.startsWith(month) ) {
-                continue;
+        let buffer: any[] = [];
+        node.items.forEach( (item) => { 
+            // 
+            const buysell = item.buysell;
+            if (buysell === '決済売' || buysell === '決済買' ) { 
+
+                buffer.push(item);
+            }else if (buysell === '新規売' || buysell == '新規買') { 
+
+                buffer.push(item);
+                const context = processTransactionBuffer(buffer);
+                earnContexts.push(context);
+                buffer = [];
             }
+        });
 
-            const aggregateKey = moment(date, 'YYYY/MM/DD').format('MM/DD');
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/groupBy#examples
+        const groupedContexts = earnContexts.groupBy( (context) => context.name );
+        
+        // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#try_it
+        for (const [aggregateKey, contexts] of Object.entries(groupedContexts)) {
 
-            const profit = node.items[i].total_pl;
-            const buysell = node.items[i].buysell;
-            const pips = Math.round(100 * (buysell === '決済売' ? node.items[i].price - node.items[i + 1].price : node.items[i + 1].price - node.items[i].price), 1);
+            // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/length#try_it
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#syntax
+            const aggregatedContext = contexts.length === 1 ? contexts[0] : contexts.reduce( (previousValue, currentValue) => {
+                if (empty(previousValue)) {
+                    return currentValue;
+                }
+                // 集約
+                previousValue.profit += currentValue.profit; 
+                previousValue.pips += currentValue.pips;
 
-            if(results[aggregateKey] === undefined) {
-
-                results[aggregateKey] = {
-                    name: aggregateKey,
-                    profit: parseInt(profit),
-                    pips: pips
-                };
-            } else {
-
-                results[aggregateKey].profit += parseInt(profit);
-                results[aggregateKey].pips += pips;
-            }
+                return previousValue;
+            }, {});
+            results.push(aggregatedContext);
         }
-
-        return Object.values(results);
+        return results;
     }).reduce( (acc: any[], val: any[]) => {
 
         return [...acc, ...val];
