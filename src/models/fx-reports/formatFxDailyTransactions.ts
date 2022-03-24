@@ -27,8 +27,10 @@ function processTransactionBuffer(buffer: any[]) {
 
     // 決済取引レコードを探す
     const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
-    
-    return settlementOrderRecords.map( (record: FxTransactionDataRecord) => {
+    return settlementOrderRecords.filter( (record: FxTransactionDataRecord) => { 
+        // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter#parameters
+        return record.date.startsWith(month);
+    }).map( (record: FxTransactionDataRecord) => {
         const date: string = record.date.split(' ')[0];
         // see https://momentjs.com/docs/#/parsing/string-format/
         const aggregateKey: string = moment(date, 'YYYY/MM/DD').format('MM/DD');
@@ -40,6 +42,7 @@ function processTransactionBuffer(buffer: any[]) {
         // pipsは売買の種別ごとに計算 (決済売の場合、決済時の為替 - 買建時の為替が利益になる(マイナスの場合は損失))
         const sign: number = record.buysell === '決済売' ? 1 : -1;
         const pips = sign * Math.round(100 * (record.price - openInterestRecord.price));
+        const date = node.items[i].date.split(' ')[0];
 
         return {
             name: aggregateKey,
@@ -58,14 +61,20 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
         let buffer: any[] = [];
         // node itemsを順次処理 ( "決済売,新規買" または "決済売,決済売,...,新規買" または "決済買,新規売" または "決済買,決済買,...,新規売"
         node.items.forEach( (item) => { 
-            // 
+
+            // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push
             buffer.push(item);
+
             // 建玉の新規売買のレコードの場合
             if (item.buysell === '新規売' || item.buysell === '新規買') { 
 
                 // 取引を１セット分処理する
-                const context = processTransactionBuffer(buffer);
-                transactionContexts.push(context);
+                const contexts = processTransactionBuffer(buffer);
+                if (contexts.length > 0) {
+                    // 
+                    // スプレッド構文 https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+                    transactionContexts.push(...contexts);
+                }
 
                 // バッファクリア
                 buffer = [];
