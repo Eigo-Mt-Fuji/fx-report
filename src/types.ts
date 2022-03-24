@@ -32,7 +32,11 @@ export interface FxMonthlyComopsedChartProps {
 export interface FxTransactionsData {
     allFxTransactionsData: any;
 }
-
+export interface FxTransactionDataRecord {
+    date: string;
+    total_pl: number;
+    buysell: string;
+} 
 export interface FxCurrentState {
     deposit: number;
     valuationGainLoss: number;
