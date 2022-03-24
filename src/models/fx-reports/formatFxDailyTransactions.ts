@@ -2,7 +2,7 @@ import moment from 'moment';
 import { FxTransactionsData, FxTransactionDataRecord } from '../../types';
 const _ = require('lodash');
 
-function getOpenInterestRecord(buffer: any[]) : FxTransactionDataRecord {
+function getOpenInterestRecord(buffer: any[]) : any {
     
     const result = buffer.filter( (item) => {
 
@@ -14,7 +14,9 @@ function getOpenInterestRecord(buffer: any[]) : FxTransactionDataRecord {
     }
     console.log('ERROR: found multi OpenInterestRecords');
     console.log(JSON.stringify(buffer));
-    return {};
+    return {
+        
+    };
 }
 function getSettlementOrderRecords(buffer: any[]) : FxTransactionDataRecord[] {
 
@@ -30,7 +32,7 @@ function getSettlementOrderRecords(buffer: any[]) : FxTransactionDataRecord[] {
 function processTransactionBuffer(month: string, buffer: any[]) {
 
     // 建玉の新規売買取引レコードを探す
-    const openInterestRecord: FxTransactionDataRecord = getOpenInterestRecord(buffer);
+    const openInterestRecord: any = getOpenInterestRecord(buffer);
 
     // 決済取引レコードを探す
     const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
