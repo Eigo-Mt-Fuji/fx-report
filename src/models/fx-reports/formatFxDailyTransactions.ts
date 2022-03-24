@@ -1,12 +1,5 @@
 import moment from 'moment';
-import { FxTransactionsData } from '../../types';
-
-interface FxTransactionDataRecord {
-    
-    date: string;
-    total_pl: number;
-    buysell: string;
-}
+import { FxTransactionsData, FxTransactionDataRecord } from '../../types';
 
 function getOpenInterestRecord(buffer: any[]) : FxTransactionDataRecord {
     
@@ -59,30 +52,32 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
 
     const res = data.allFxTransactionsData.nodes.map( (node) => {
         const results: any[] = [];
-        const earnContexts: any[] = []
+        const transactionContexts: any[] = []
 
         let buffer: any[] = [];
+        // node itemsを順次処理 ( "決済売,新規買" または "決済売,決済売,...,新規買" または "決済買,新規売" または "決済買,決済買,...,新規売"
         node.items.forEach( (item) => { 
             // 
-            const buysell = item.buysell;
-            if (buysell === '決済売' || buysell === '決済買' ) { 
+            buffer.push(item);
+            // 建玉の新規売買のレコードの場合
+            if (item.buysell === '新規売' || item.buysell == '新規買') { 
 
-                buffer.push(item);
-            }else if (buysell === '新規売' || buysell == '新規買') { 
-
-                buffer.push(item);
+                // 取引を１セット分処理する
                 const context = processTransactionBuffer(buffer);
-                earnContexts.push(context);
+                transactionContexts.push(context);
+
+                // バッファクリア
                 buffer = [];
             }
         });
 
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/groupBy#examples
-        const groupedContexts = earnContexts.groupBy( (context) => context.name );
+        const groupedTransactionContexts = transactionContexts.groupBy( (context) => context.name );
         
         // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#try_it
-        for (const [aggregateKey, contexts] of Object.entries(groupedContexts)) {
-
+        for (const [aggregateKey, contexts] of Object.entries(groupedTransactionContexts)) {
+            
+            // 要素数が１の場合以外は、損益とpips値を集計
             // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/length#try_it
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#syntax
             const aggregatedContext = contexts.length === 1 ? contexts[0] : contexts.reduce( (previousValue, currentValue) => {
