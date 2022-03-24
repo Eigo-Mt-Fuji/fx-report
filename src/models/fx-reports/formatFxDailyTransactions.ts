@@ -20,7 +20,7 @@ function getSettlementOrderRecords(buffer: any[]) : FxTransactionDataRecord[] {
 /**
  * 決済売買の日付を元に日毎の取引実績を集計する
  */
-function processTransactionBuffer(buffer: any[]) {
+function processTransactionBuffer(month: string, buffer: any[]) {
 
     // 建玉の新規売買取引レコードを探す
     const openInterestRecord: FxTransactionDataRecord = getOpenInterestRecord(buffer);
@@ -69,7 +69,7 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
             if (item.buysell === '新規売' || item.buysell === '新規買') { 
 
                 // 取引を１セット分処理する
-                const contexts = processTransactionBuffer(buffer);
+                const contexts = processTransactionBuffer(month, buffer);
                 if (contexts.length > 0) {
                     // 
                     // スプレッド構文 https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Spread_syntax
