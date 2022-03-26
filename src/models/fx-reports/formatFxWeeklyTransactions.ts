@@ -1,72 +1,135 @@
+const _ = require('lodash');
+
 import moment from 'moment';
-import { FxTransactionsData } from '../../types';
+import { FxTransactionsData, FxTransactionDataRecord } from '../../types';
 
-function formatFxWeeklyTransactions(data: FxTransactionsData, month: string) : any[] {
-    // const today = moment();
+import getOpenInterestRecord from './getOpenInterestRecord';
+import getSettlementOrderRecords from './getSettlementOrderRecords';
 
-    const convertToWeek = (date: Date) => {
-        const monthStartDay = moment(month, 'YYYY/MM').startOf('month');
-        const monthEndDay = moment(month, 'YYYY/MM').endOf('month');
-        const weekStartDay = date.startOf('week');
-        let result = null;
+const convertToWeek = (month: string, date: string) => {
 
-        // 月初
-        if ( weekStartDay.isBefore(monthStartDay) ) {
-            
-            result = monthStartDay;
-        // 月末
-        }else if(weekStartDay.isSame(monthEndDay)) {
-            
-            result = monthEndDay;
-        // 毎週月曜基準
+    const monthStartDay = moment(month, 'YYYY/MM').startOf('month');
+    const monthEndDay = moment(month, 'YYYY/MM').endOf('month');
+    const weekStartDay = moment(date, 'YYYY/MM/DD').startOf('week');
+    let result = null;
+
+    // 月初
+    if ( weekStartDay.isBefore(monthStartDay) ) {
+        
+        result = monthStartDay;
+    // 月末
+    }else if(weekStartDay.isSame(monthEndDay)) {
+        
+        result = monthEndDay;
+    // 毎週月曜基準
+    }else {
+
+        result = weekStartDay.add(1, 'days');
+    }
+
+    return result.format('MM/DD〜');
+};
+
+export default function formatFxWeeklyTransactions(data: FxTransactionsData, month: string) : any[] {
+
+    let buffer: any[] = [];
+    const transactionContexts: any[] = [];
+  
+    data.allFxTransactionsData.nodes.reduce( (accumulator: any[], currentValue: any) => {
+        const items = currentValue.items;
+        return [...accumulator, ...items];
+    }, []).forEach( (item: any) => { 
+        // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push
+        buffer.push(item);
+
+        // 建玉の新規売買のレコードの場合
+        if (item.buysell === '新規売' || item.buysell === '新規買') { 
+
+            // 取引を１セット分処理する
+            // 建玉の新規売買取引レコードを探す
+            const openInterestRecord: FxTransactionDataRecord|null = getOpenInterestRecord(buffer);
+            if (openInterestRecord) {
+
+                // 決済取引レコードを探す
+                const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
+
+                const contexts: any[] = settlementOrderRecords.filter( (record: FxTransactionDataRecord) => { 
+                    // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter#parameters
+                    return record.date.startsWith(month);
+                }).map( (record: FxTransactionDataRecord) => {
+
+                    const week = convertToWeek(month, record.date);
+        
+                    const profit = record.total_pl;
+                    const sign: number = record.buysell === '決済売' ? 1 : -1;
+                    const pips = sign * Math.round(100 * (record.price - openInterestRecord.price));        
+
+                    return {
+                        name: week,
+                        profit,
+                        pips
+                    };
+                });
+
+                if (contexts.length > 0) {
+
+                    // スプレッド構文 https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+                    transactionContexts.push(...contexts);
+                }  
+            }
+
+            // バッファクリア
+            buffer = [];
+        }
+
+    });
+    transactionContexts.reduce( (previous, current) => {
+        const aggregateKey: string = current.name;
+        if (aggregateKey in previous) {
+
+            previous[aggregateKey].push(current);
         }else {
-
-            result = weekStartDay.add(1, 'days');
-        }
-
-        return result.format('MM/DD〜');
-    };
-    // const thisWeek = convertToWeek(today);
-
-    const res = data.allFxTransactionsData.nodes.map( (node) => {
-        const results = {};
-
-        for( let i = 0; i < node.items.length; i+= 2) {
-            const date = node.items[i].date.split(' ')[0];
-            if ( !date.startsWith(month) ) {
-                continue;
-            }
             
-            const aggregateKey = convertToWeek(moment(date, 'YYYY/MM/DD'));
-            // const aggregateKey = week !== thisWeek ? week : moment(date, "YYYY/MM/DD").format("MM/DD");
-
-            const profit = node.items[i].total_pl;
-            const buysell = node.items[i].buysell;
-            const pips = Math.round(100 * (buysell === '決済売' ? node.items[i].price - node.items[i + 1].price : node.items[i + 1].price - node.items[i].price), 1);
-
-            if(results[aggregateKey] === undefined) {
-
-                results[aggregateKey] = {
-                    name: aggregateKey,
-                    profit: parseInt(profit),
-                    pips: pips
-                };
-            } else {
-
-                results[aggregateKey].profit += parseInt(profit);
-                results[aggregateKey].pips += pips;
-            }
+            previous[aggregateKey] = [];
+            previous[aggregateKey].push(current);
         }
+        return previous;
+    }, {});
 
-        return Object.values(results);
-    }).reduce( (acc, val) => {
+    const groupedTransactionContexts = transactionContexts.reduce( (accumulator, current) => {
+        const aggregateKey: string = current.name;
+        if (aggregateKey in accumulator) {
 
-        return [...acc, ...val];
-    }, []);
+            accumulator[aggregateKey].push(current);
+        }else {
+            
+            accumulator[aggregateKey] = [];
+            accumulator[aggregateKey].push(current);
+        }
+        return accumulator;
+    }, {});
+    // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#try_it
+    const results = Object.values(groupedTransactionContexts).map( (contexts: any) => {
 
-    res.sort();
+        return contexts.length === 1 ? contexts[0] : contexts.reduce( (accumulator: any, current: any) => {
+            // https://lodash.com/docs/#isEmpty
+            if (_.isEmpty(accumulator)) {
+                return current;
+            }
+            // 集約
+            accumulator.profit += current.profit; 
+            accumulator.pips += current.pips;
 
-    return res.reverse();
+            return accumulator;
+        }, {});
+    });
+    // ソートして返却
+    results.sort( (a, b) => {
+
+        if (a.name == b.name) return 0;
+
+        return a.name < b.name ? 1 : -1;
+    });
+    return results;
+
 }
-
-export default formatFxWeeklyTransactions;
