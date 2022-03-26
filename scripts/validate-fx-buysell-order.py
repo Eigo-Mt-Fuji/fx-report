@@ -20,8 +20,7 @@ with open(os.path.join(os.path.dirname(__file__), 'list.csv'), 'r') as f:
             counter += 1
 
             date = row[1]
-            buysell = row[4]
-            if buysell == "新規売" or buysell == "新規買":
+            if row[4] == "新規売" or row[4] == "新規買":
                 index = counter - len(buffer) - 1
                 last_settlement = 0
                 first_open_interest_index = 0
