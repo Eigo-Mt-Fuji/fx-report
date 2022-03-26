@@ -34,7 +34,7 @@ function processTransactionBuffer(month: string, buffer: any[]) {
 
         return {
             name: aggregateKey,
-            profit: parseInt(profit),
+            profit: profit,
             pips: pips
         };
     });
@@ -71,7 +71,7 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
 
         // Array#groupByはexperimentalなのでnodejsでは3/24時点で使えない https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/groupBy#examples
         // 代わりにreduce
-        const groupedTransactionContexts = transactionContexts.reduce( (previous, current) => {
+        const groupedTransactionContexts: any = transactionContexts.reduce( (previous, current) => {
             const aggregateKey: string = current.name;
             if (aggregateKey in previous) {
 
@@ -84,24 +84,25 @@ function formatFxTransactions(data: FxTransactionsData, month: string) : any[] {
             return previous;
         }, {});
         // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#try_it
-        for (const [aggregateKey, contexts] of Object.entries(groupedTransactionContexts)) {
-            
+        Object.values(groupedTransactionContexts).forEach( (contexts: any, index: number) => {
+
+
             // 要素数が１の場合以外は、損益とpips値を集計
             // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/length#try_it
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#syntax
-            const aggregatedContext = contexts.length === 1 ? contexts[0] : contexts.reduce( (previousValue, currentValue) => {
+            const aggregatedContext = contexts.length === 1 ? contexts[0] : contexts.reduce( (accumulator: any, current: any) => {
                 // https://lodash.com/docs/#isEmpty
-                if (_.isEmpty(previousValue)) {
-                    return currentValue;
+                if (_.isEmpty(accumulator)) {
+                    return current;
                 }
                 // 集約
-                previousValue.profit += currentValue.profit; 
-                previousValue.pips += currentValue.pips;
+                accumulator.profit += current.profit; 
+                accumulator.pips += current.pips;
 
-                return previousValue;
+                return accumulator;
             }, {});
             results.push(aggregatedContext);
-        }
+        });
         return results;
     }).reduce( (acc: any[], val: any[]) => {
 

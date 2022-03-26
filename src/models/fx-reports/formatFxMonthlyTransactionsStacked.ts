@@ -23,9 +23,9 @@ export default function formatFxMonthlyTransactionsStacked(data:FxTransactionsDa
     let buffer: any[] = [];
     const transactionContexts: any[] = [];
     // 取引実績データCSVの決済取引行(偶数行)だけ処理する
-    data.allFxTransactionsData.nodes.reduce( (acc:any[], val: any[]) => {
-
-        return [...acc, ...val];
+    data.allFxTransactionsData.nodes.reduce( (acc:any[], current: any) => {
+        const items = current.items;
+        return [ ...acc, ...items ];
     }, []).forEach( (item:any) => {
 
         buffer.push(item);
@@ -80,7 +80,7 @@ export default function formatFxMonthlyTransactionsStacked(data:FxTransactionsDa
     } );
 
     // 最終取引日テキスト
-    const lastTransactionDateComment: string = !_.isEmpty(transactionContexts) ? `${transactionContexts[0].date.split(' ')[0]}時点` : '':  
+    const lastTransactionDateComment: string = !_.isEmpty(transactionContexts) ? `${transactionContexts[0].date.split(' ')[0]}時点` : '';
 
     // 月次の損益実績を集計
     const monthlyProfits = transactionContexts.reduce( (accumulator, current) => {
