@@ -16,6 +16,8 @@ const FxAnnualReport = (props: FxAnnualChartProps) => {
             nodes {
                 items {
                     date
+                    buysell
+                    price
                     total_pl
                 }
             }

@@ -59,8 +59,14 @@ module.exports = {
       }
     },
     'gatsby-plugin-image',
-    `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-transformer-sharp`,
+      options: {
+        // The option defaults to true
+        checkSupportedExtensions: false,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
