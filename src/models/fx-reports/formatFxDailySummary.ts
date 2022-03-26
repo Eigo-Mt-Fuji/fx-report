@@ -83,9 +83,9 @@ export default function formatFxDailySummary(month: string, data: FxTransactions
 
       // 取引回数
       accumulator[date].count = accumulator[date].count + 1;
-
+      const totalPl = parseInt(current.totalPl);
       // 利益確定回数(損失確定回数)
-      if (current.totalPl >= 0) {
+      if (totalPl >= 0) {
         
         // 利益が出ている(もしくは0円=一応マイナスではない)回数
         accumulator[date].countPositive = accumulator[date].countPositive + 1;
@@ -98,7 +98,7 @@ export default function formatFxDailySummary(month: string, data: FxTransactions
       accumulator[date].timestamps.push(current.timestamp);
 
       // 取引単価(リスト)
-      accumulator[date].totalPls.push(current.totalPl);
+      accumulator[date].totalPls.push(totalPl);
 
       // 新規取引 - 決済までの経過時間(秒)
       accumulator[date].durations.push(current.duration);

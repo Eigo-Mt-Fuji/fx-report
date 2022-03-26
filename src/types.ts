@@ -34,7 +34,7 @@ export interface FxTransactionsData {
 }
 export interface FxTransactionDataRecord {
     date: string;
-    total_pl: number;
+    total_pl: string;
     buysell: string;
     price: number;
 } 
@@ -151,7 +151,7 @@ export interface DigitalSignageListProps {
 
 export interface FxDailySummaryContextData {
     date: string;
-    totalPl: number;
+    totalPl: string;
     timestamp: number;
     duration: number;
 }

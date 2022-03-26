@@ -34,7 +34,7 @@ function processTransactionBuffer(month: string, buffer: any[]) {
 
         return {
             name: aggregateKey,
-            profit: profit,
+            profit: parseInt(profit),
             pips: pips
         };
     });

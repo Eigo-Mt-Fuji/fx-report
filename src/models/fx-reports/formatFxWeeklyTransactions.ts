@@ -60,7 +60,7 @@ export default function formatFxWeeklyTransactions(data: FxTransactionsData, mon
 
                     const week = convertToWeek(month, record.date);
         
-                    const profit = record.total_pl;
+                    const profit = parseInt(record.total_pl);
                     const sign: number = record.buysell === '決済売' ? 1 : -1;
                     const pips = sign * Math.round(100 * (record.price - openInterestRecord.price));        
 
