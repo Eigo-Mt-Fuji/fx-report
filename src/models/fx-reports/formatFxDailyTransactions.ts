@@ -2,29 +2,9 @@ import moment from 'moment';
 import { FxTransactionsData, FxTransactionDataRecord } from '../../types';
 const _ = require('lodash');
 
-function getOpenInterestRecord(buffer: any[]) : any {
-    
-    const result = buffer.filter( (item) => {
+import getOpenInterestRecord from './getOpenInterestRecord';
 
-        return item.buysell == '新規売' || item.buysell == '新規買';
-    });
-    if ( result ) {
-
-        return result[0];  
-    }
-    console.log('ERROR: found multi OpenInterestRecords');
-    console.log(JSON.stringify(buffer));
-    return {
-        
-    };
-}
-function getSettlementOrderRecords(buffer: any[]) : FxTransactionDataRecord[] {
-
-    return buffer.filter( (item) => {
-
-        return item.buysell == '決済売' || item.buysell == '決済買';
-    });
-}
+import getSettlementOrderRecords from './getSettlementOrderRecords';
 
 /**
  * 決済売買の日付を元に日毎の取引実績を集計する

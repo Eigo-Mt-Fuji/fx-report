@@ -148,3 +148,11 @@ export interface FxSummaryViewDurationBarChartProps {
 export interface DigitalSignageListProps {
     title: string;
 }
+
+export interface FxDailySummaryContextData {
+    date: string;
+    totalPl: number;
+    timestamp: number;
+    duration: number;
+}
+  
