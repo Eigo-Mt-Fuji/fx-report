@@ -2,8 +2,12 @@ import {
     FxTransactionsData, 
     FxMonthlyTransactionsResponse, 
     FxMonthlyTransactionsDataEntry, 
-    FxMonthlyTransactionsProfitKey
+    FxMonthlyTransactionsProfitKey,
+    FxTransactionDataRecord
 } from '../../types';
+import getOpenInterestRecord from './getOpenInterestRecord';
+import getSettlementOrderRecords from './getSettlementOrderRecords';
+const _ = require('lodash');
 
 /**
  * FX月次実績データ整形処理(積み上げ棒グラフ用)
@@ -12,54 +16,89 @@ import {
  * @param dream 目標金額(単位: 円)
  * @returns FxMonthlyTransactionsResponse
  */
-function formatFxMonthlyTransactionsStacked(data:FxTransactionsData, year: string, dream:number) : FxMonthlyTransactionsResponse {
+export default function formatFxMonthlyTransactionsStacked(data:FxTransactionsData, year: string, dream:number) : FxMonthlyTransactionsResponse {
+
+    const profitKeySuffix = '月';
+
+    let buffer: any[] = [];
+    const transactionContexts: any[] = [];
+    // 取引実績データCSVの決済取引行(偶数行)だけ処理する
+    data.allFxTransactionsData.nodes.reduce( (acc:any[], val: any[]) => {
+
+        return [...acc, ...val];
+    }, []).forEach( (item:any) => {
+
+        buffer.push(item);
+        if (item.buysell === '新規売' || item.buysell === '新規買') {
+
+            const openInterestRecord: FxTransactionDataRecord|null = getOpenInterestRecord(buffer);
+            if (openInterestRecord != null) {
+
+                const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer).filter( (record) => {
+                    const date = record.date.split(' ')[0];
+                    return date.startsWith(year);
+                });
+                if (settlementOrderRecords.length !== 0) {
+
+                    const contexts = settlementOrderRecords.map( (record: FxTransactionDataRecord) => {
+                        const date = record.date.split(' ')[0];
+                        const month = date.substring(5, 7);
+                        const sign: number = openInterestRecord?.buysell === '新規買' ? 1 : -1;
+                        const pips: number = sign * Math.round( 100 * record.price - openInterestRecord.price);
+
+                        return {
+                            month,
+                            date,
+                            name: `${month}${profitKeySuffix}`,
+                            pips,
+                            profit: record.total_pl
+                        };
+                    });
+
+                    transactionContexts.push(...contexts);
+                }
+            }
+            
+            buffer = [];
+        }
+    });
+
+    // 01月...12月まで実績を初期化
     const aggregates: FxMonthlyTransactionsDataEntry = {
         year: parseInt(year)
     };
-
-    const profitKeySuffix = '月';
     const profitKeys: FxMonthlyTransactionsProfitKey[] = [];
-
-    // 01月...12月まで実績を初期化
     for(let i = 1; i <= 12; i++) {
         const month = ('0' + i).slice(-2);
         const profitKey = `${month}${profitKeySuffix}`;
         aggregates[profitKey] = 0;
         profitKeys.push({key: profitKey, actual: true});
     }
-
-    let lastTransactionDate: string|undefined;
-    let sum = 0;
-
-    // 取引実績データCSVの決済取引行(偶数行)だけ処理する
-    data.allFxTransactionsData.nodes.forEach( (node:any) => {
-        for( let i = 0; i < node.items.length; i+= 2) {
-            //
-            const date = node.items[i].date.split(' ')[0];
-
-            // 対象年以外はskip
-            if ( !date.startsWith(year) ) continue;
-
-            if (lastTransactionDate == null || lastTransactionDate < date) {
-                // 最終取引日を更新
-                lastTransactionDate = date;
-             }
-            // 月ごとに集計
-            const month = date.substring(5, 7);
-            const profit = node.items[i].total_pl;
-            sum += parseInt(profit);
-            aggregates[`${month}${profitKeySuffix}`] += parseInt(profit);
-        }
-    });
-
-    // 実績集計
-    const actualSum: number = profitKeys.map( (target) => aggregates[target.key] ).reduce( (previous, current) => previous + current, 0);
+    transactionContexts.sort( (a, b) => {
+        if (a.date === b.date) return 0;
+        return a.date > b.date ? 1 : -1;
+    } );
 
     // 最終取引日テキスト
-    const lastTransactionDateComment: string = lastTransactionDate ? `※${lastTransactionDate}時点` : '';
+    const lastTransactionDateComment: string = !_.isEmpty(transactionContexts) ? `${transactionContexts[0].date.split(' ')[0]}時点` : '':  
+
+    // 月次の損益実績を集計
+    const monthlyProfits = transactionContexts.reduce( (accumulator, current) => {
+        if (current.name in accumulator === false) {
+            accumulator[current.name] = current.profit;
+            return accumulator;
+        }
+        accumulator[current.name] += current.profit;
+        return accumulator;
+    }, {});
+        
+    // 月次損益実績の合計を算出
+    const actualSum: number = profitKeys
+        .map( (target) => monthlyProfits[target.key] )
+        .reduce((accumulator, current) => accumulator + current, 0);
 
     // 目標までの残金を末尾に追加
-    aggregates['目標まで'] = dream - sum;
+    aggregates['目標まで'] = dream - actualSum;
     profitKeys.push({key:'目標まで', actual: false});
 
     return {
@@ -72,4 +111,3 @@ function formatFxMonthlyTransactionsStacked(data:FxTransactionsData, year: strin
     };
 }
 
-export default formatFxMonthlyTransactionsStacked;
