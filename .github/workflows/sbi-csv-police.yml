@@ -14,14 +14,14 @@ jobs:
           python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
 
-      - name: export csv destination path
-        run: export PROCESSED_CSV_DEST_PATH=$(pwd)/src/data/fx_transactions/
-        working-directory: ./
-
       - name: find and transform original SBI csv file 
         run: |
+          # export csv destination path
+          export PROCESSED_CSV_DEST_PATH=$(pwd)/src/data/fx_transactions/
           echo $PROCESSED_CSV_DEST_PATH
+
           ls -la downloads/sbi/*.csv
+
           find downloads/sbi -name '*.csv' | sort | xargs -ITARGET python scripts/transform-sbi-csv.py TARGET $PROCESSED_CSV_DEST_PATH
         working-directory: ./
 
