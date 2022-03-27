@@ -49,7 +49,6 @@ const FxMonthlyReport = (props: FxMonthlyReportProps) => {
             </div>
            <FxTransactionsTable month={props.month} data={daily}></FxTransactionsTable>
         </>
-
     );
 }
 
