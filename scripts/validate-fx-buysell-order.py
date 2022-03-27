@@ -20,6 +20,11 @@ with open(os.path.join(os.path.dirname(__file__), 'list.csv'), 'r') as f:
             counter += 1
 
             date = row[1]
+            if len(row) < 5:
+                print('ERROR: row length is {}. must larger than 5'.format(len(row)))
+                print(row)
+            else:
+                print(row[4])
             if row[4] == "新規売" or row[4] == "新規買":
                 index = counter - len(buffer) - 1
                 last_settlement = 0
