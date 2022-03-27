@@ -9,11 +9,11 @@ def get_formal_csv_path(original_csv_file_path, dest_csv_dir):
     original_csv_base_name = os.path.basename(original_csv_file_path)
 
     # https://docs.python.org/3/library/re.html#search-vs-match
-    match = re.search(r"^(kessai[0-9]{4})([0-9]{2}).*.csv$", original_csv_base_name)
+    match = re.search(r"^kessai([0-9]{4})([0-9]{2}).*.csv$", original_csv_base_name)
 
     if match:
-        year = match.group(0)
-        month = match.group(1)
+        year = match.group(1)
+        month = match.group(2)
 
         return '{}/kessai{}{}.csv'.format(dest_csv_dir, year, month)
     else:

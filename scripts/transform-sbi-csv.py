@@ -15,7 +15,9 @@ try:
     dest_csv_dir = sys.argv[2]
 
     dest_file_path = sbi_csv_util.get_formal_csv_path(original_csv_file_path, dest_csv_dir)
-
+    
+    # see https://docs.python.org/3/library/codecs.html#codecs.getreader
+    # see https://docs.python.org/3/library/codecs.html#standard-encodings
     with open(original_csv_file_path, 'r', encoding='shift_jis') as input_stream:
         with open(dest_file_path, 'w', encoding='utf-8') as output_stream:
 

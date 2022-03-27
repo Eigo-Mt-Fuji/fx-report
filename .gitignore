@@ -4,3 +4,4 @@
 /.env.production
 /public
 scripts/*.csv
+__pycache__
