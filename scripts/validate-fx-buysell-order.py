@@ -16,7 +16,8 @@ with open(csv_file_path, 'r') as f:
         buffer = []
 
         for row in reader:
-            if len(row) < 5:
+            # SBI証券のCSV形式は１２列
+            if len(row) != 12:
                 print('ERROR: File {} index={} row column length is {}. must larger than 5'.format(csv_file_path, counter, len(row)))
                 print(row)
                 exit(1)
