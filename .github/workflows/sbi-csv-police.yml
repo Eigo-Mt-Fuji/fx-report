@@ -22,7 +22,7 @@ jobs:
 
           ls -la downloads/sbi/*.csv
 
-          find $(pwd)/downloads/sbi -name '*.csv' | sort | xargs -ITARGET sh -c "cd scripts && python transform-sbi-csv.py TARGET $PROCESSED_CSV_DEST_PATH"
+          find $(pwd)/downloads/sbi -name '*.csv' | sort | xargs -ITARGET sh -c "cd scripts && python transform-sbi-csv.py TARGET $PROCESSED_CSV_DEST_PATH && rm -rf TARGET"
         working-directory: ./
 
       - name: Create Pull Request
