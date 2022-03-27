@@ -21,7 +21,7 @@ jobs:
       - name: find and transform original SBI csv file 
         run: |
           echo $PROCESSED_CSV_DEST_PATH
-          ls -la downloads/sbi/*.csv/
+          ls -la downloads/sbi/*.csv
           find downloads/sbi -name '*.csv' | sort | xargs -ITARGET python scripts/transform-sbi-csv.py TARGET $PROCESSED_CSV_DEST_PATH
         working-directory: ./
 
