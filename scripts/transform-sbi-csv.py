@@ -16,7 +16,7 @@ try:
 
     dest_file_path = sbi_csv_util.get_formal_csv_path(original_csv_file_path, dest_csv_dir)
 
-    with open(original_csv_file_path, 'r') as input_stream:
+    with open(original_csv_file_path, 'r', encoding='shift_jis') as input_stream:
         with open(dest_file_path, 'w', encoding='utf-8') as output_stream:
 
             row_count = sbi_csv_util.transform_to_formal_csv(input_stream, output_stream)
