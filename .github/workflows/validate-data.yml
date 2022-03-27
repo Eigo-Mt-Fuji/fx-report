@@ -12,9 +12,5 @@ jobs:
           python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
       - name: Validate latest fx-transactions kessaidata
-        run: |
-          export TARGET_MONTH=$(date +'%Y%m')
-          export TARGET_DATA_FILEPATH="./src/data/fx_transactions/kessai${TARGET_MONTH}.csv"
-          cut -d, -f 2,5 $TARGET_DATA_FILEPATH > scripts/list.csv
-          python ./scripts/validate-fx-buysell-order.py
+        run: find src/data/fx_transactions/ -name '*.csv' | xargs -ITARGET python scripts/validate-fx-buysell-order.py TARGET
         working-directory: ./
