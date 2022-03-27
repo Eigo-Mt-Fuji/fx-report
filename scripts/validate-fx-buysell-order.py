@@ -2,10 +2,6 @@ import csv
 import os
 import sys
 
-print("Begin.")
-print("\033[0m")
-last_buysell = None
-
 csv_file_path = sys.argv[1]
 if os.path.exists(csv_file_path) == False:
     print('File {} does not exists, skip.'.format(csv_file_path) )
@@ -59,6 +55,4 @@ with open(csv_file_path, 'r') as f:
             print("\033[0mDone.")
             exit(1)
 
-print("\033[0m")
-print("\033[92mFile {} Row count={}".format(csv_file_path, counter))
-print("\033[0mDone.")
+print("\033[92mFile {} Row count={}\033[0m".format(csv_file_path, counter))
