@@ -28,9 +28,9 @@ function processTransactionBuffer(month: string, buffer: any[]) {
         const profit =  record.total_pl;
 
         // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/round
-        // pipsは売買の種別ごとに計算 (決済売の場合、決済時の為替 - 買建時の為替が利益になる(マイナスの場合は損失))
-        const sign: number = record.buysell === '決済売' ? 1 : -1;
-        const pips = sign * Math.round(100 * (record.price - openInterestRecord.price));
+        // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/abs
+        // pipsは絶対値を計算
+        const pips = Math.abs( Math.round(100 * (record.price - openInterestRecord.price)) ) ;
 
         return {
             name: aggregateKey,
