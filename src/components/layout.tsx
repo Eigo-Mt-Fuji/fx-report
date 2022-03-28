@@ -12,6 +12,9 @@ import { useStaticQuery, graphql } from 'gatsby'
 import SEO from './seo';
 import Header from './header'
 import './layout.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+import './neumorphism.css';
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
