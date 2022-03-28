@@ -4,7 +4,6 @@ import Layout from '../components/layout'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Carousel, Card, Button, Container, Row, Col} from 'react-bootstrap';
 import { run as runHolder } from 'holderjs/holder';
-import MyPlaygroundMap from '../components/my-playgrounds/my-playground-map';
 
 const IndexPage: () => any = ()=> {
   
@@ -31,24 +30,6 @@ const IndexPage: () => any = ()=> {
               </Row>
           </Container>
         </section>
-        <section>
-          <h1>スポット</h1>
-          <Carousel style={{width: '100%'}}>
-            <Carousel.Item>
-                <img className="d-block w-100" src="holder.js/300x500?text=*&bg=cccccc" alt="202011"/>
-                <Carousel.Caption>
-                    <MyPlaygroundMap zoom={15} width={250} height={250} latitude={35.69591109932402} longitude={139.7013029029837}>焼肉 にくの音<br/>(2020.11)</MyPlaygroundMap>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-                <img className="d-block w-100" src="holder.js/300x500?text=*&bg=cccccc" alt="202102"/>
-                <Carousel.Caption as="div">
-                  <MyPlaygroundMap zoom={15} width={250} height={250} latitude={35.697976} longitude={139.704339}>焼肉ますお<br/>(2021.02)</MyPlaygroundMap>
-                </Carousel.Caption>
-            </Carousel.Item>
-          </Carousel>
-        </section>
-
       </Layout>
     )
 }
