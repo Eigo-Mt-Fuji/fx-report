@@ -13,7 +13,6 @@ jobs:
         with:
           python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-
       - name: find and transform original SBI csv file 
         run: |
           # export csv destination path
@@ -25,5 +24,24 @@ jobs:
           find $(pwd)/downloads/sbi -name '*.csv' | sort | xargs -ITARGET sh -c "cd scripts && python transform-sbi-csv.py TARGET $PROCESSED_CSV_DEST_PATH && rm -rf TARGET"
         working-directory: ./
 
+      - name: Get current datetime
+        id: datetime
+        run: echo "::set-output name=value::$(date +'%Y-%m-%d %H:%M:%S')"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: Update src/data/fx_transactions {{ steps.datetime.outputs.value }}
+          title: Update src/data/fx_transactions {{ steps.datetime.outputs.value }}
+          body: |
+            Update Update src/data/fx_transactions {{ steps.datetime.outputs.value }}
+          labels: |
+            workflow
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          assignees: Eigo-Mt-Fuji
+          reviewers: Eigo-Mt-Fuji
+          team-reviewers: |
+            owners
+            maintainers
+          milestone: 1
+          draft: false
