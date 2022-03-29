@@ -54,8 +54,13 @@ graph TD
 * Tool
   * Python
       * [validate-fx-buysell-order](./scripts/validate-fx-buysell-order.py)
-        * SBIから取得したCSV内に、実施した覚えのない決済売が2回連続するという不整合があったので検知する処理をスクリプト化
-        * push時にgithub上で以下のように実行・エラーを検知
+        * push時にgithub上で実行・エラーを検知
+      * [sbi-csv-police](./scripts/sbi-csv-police.py)
+        * SBIのFX取引明細をサイトに反映する作業の自動化
+           * https://github.com/Eigo-Mt-Fuji/fx-report/issues/5
+            * downloads/sbi/ディレクトリにCSVファイルをpushする
+            * github workflow上でCSV変換処理が自動実行される
+            * (workflowが正常終了した場合)変換後のCSVファイルを反映するPRが生成される
   * Analytics
      * Gtag https://analytics.google.com/analytics/web/?authuser=0#/a221044200p304415269/admin/streams/table/
      * Optimize Container https://optimize.google.com/optimize/home/#/accounts/4704735488/containers/15058710
