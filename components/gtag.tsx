@@ -32,6 +32,7 @@ export const GoogleAnalytics = () => (
     {existsGaId && (
       <>
         <Script defer src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+        {/* next/script components with inline content require an id attribute https://nextjs.org/docs/messages/inline-script-id */}
         <Script id="gtag_inline_script" 
           defer
           dangerouslySetInnerHTML={{
