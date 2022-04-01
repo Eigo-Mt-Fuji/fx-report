@@ -1,7 +1,9 @@
 import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby'
+// TODO: replace using nextjs component or plain html component
+import { useStaticQuery, graphql } from 'gatsby';
 import formatFxMonthlyTransactionsStacked from '../../models/fx-reports/formatFxMonthlyTransactionsStacked';
 import formatFxProfitLossYen from '../../models/fx-reports/formatFxProfitLossYen';
+import PropTypes from 'prop-types'
 import {
     FxTransactionsData, 
     FxMonthlyTransactionsResponse, 
@@ -11,6 +13,7 @@ import FxAnnualStackedBarChart from './fx-annual-stacked-barchart';
 
 const FxAnnualReport = (props: FxAnnualChartProps) => {
     
+    // TODO: replace using nextjs component or plain html component
     const transactions:FxTransactionsData = useStaticQuery(graphql`{
         allFxTransactionsData {
             nodes {
@@ -33,13 +36,14 @@ const FxAnnualReport = (props: FxAnnualChartProps) => {
             <div>目標: <span style={{'fontSize':'25px', 'fontWeight': 'bold'}}>{formatFxProfitLossYen(props.dream)}</span></div>
             <div>実績: <span style={{'fontSize':'25px', 'fontWeight': 'bold'}}>{formatFxProfitLossYen(actualSum)}</span><span>{lastTransactionDateComment}</span></div>
             <div style={{ width: '100%', height: 500 }}>
-                <FxAnnualStackedBarChart 
-                    data={res.data[0]} 
-                    profitKeys={res.profitKeys} 
-                    ticks={ticks}/ >
+                <FxAnnualStackedBarChart data={res.data[0]} profitKeys={res.profitKeys} ticks={ticks} />
             </div>
         </div>
     );
-}
-  
+};
+
+FxAnnualReport.propTypes = {
+    year: PropTypes.string.isRequired,
+    dream: PropTypes.number.isRequired,
+};
 export default FxAnnualReport;

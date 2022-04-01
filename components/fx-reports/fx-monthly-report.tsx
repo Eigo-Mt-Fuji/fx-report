@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+// TODO: replace using nextjs component or plain html component
 import { useStaticQuery, graphql } from 'gatsby'
 
 import PropTypes from 'prop-types'
@@ -17,7 +18,8 @@ import {FxMonthlyReportProps} from '../../types';
 const FxMonthlyReport = (props: FxMonthlyReportProps) => {
 
     const [aggregate, setAggregate] = useState<string|null>(props.aggregate);
-
+    
+    // TODO: replace using nextjs component or plain html component
     const transactions = useStaticQuery(graphql`{
         allFxTransactionsData {
             nodes {

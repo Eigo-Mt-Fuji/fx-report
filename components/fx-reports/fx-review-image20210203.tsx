@@ -1,4 +1,5 @@
 import React from 'react'
+// TODO: replace using nextjs component or plain html component
 import { useStaticQuery, graphql } from 'gatsby'
 import { GatsbyImage } from 'gatsby-plugin-image'
 
@@ -15,6 +16,7 @@ import { GatsbyImage } from 'gatsby-plugin-image'
 
  
 const Image = () => {
+  // TODO: replace using nextjs component or plain html component
   // warn [gatsby-transformer-sharp] The "fixed" and "fluid" resolvers are now deprecated. Switch to "gatsby-plugin-image" for better performance and a simpler API. See https://gatsby.dev/migrate-images to learn how.
   const data = useStaticQuery(graphql`
     query {
@@ -29,6 +31,7 @@ const Image = () => {
     return <div>Picture not found</div>
   }
 
+  // TODO: replace using nextjs component or plain html component
   return <GatsbyImage alt="fx-review-20210203.png" image={data.placeholderImage.childImageSharp.gatsbyImageData}  imgStyle={{'width':'100%'}} />
 }
 

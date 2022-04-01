@@ -7,16 +7,14 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+// TODO: replace using nextjs component or plain html component
 import { useStaticQuery, graphql } from 'gatsby'
 
 import SEO from './seo';
 import Header from './header'
-import './layout.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.css';
-import './neumorphism.css';
 
 const Layout = ({ children }) => {
+  // TODO: replace using nextjs component or plain html component
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -29,6 +27,7 @@ const Layout = ({ children }) => {
     }
   `)
 
+  // TODO: replace using nextjs component or plain html component
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title || 'Title'}>
