@@ -5,9 +5,15 @@ import './layout.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import './neumorphism.css';
+import {GoogleAnalytics} from '../components/gtag';
+import usePageView from '../hooks/use-page-view';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  usePageView();
+  return <>
+    <GoogleAnalytics />
+    <Component {...pageProps} />
+  </>
 }
 
 export default MyApp

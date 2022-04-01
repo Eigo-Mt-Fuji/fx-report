@@ -156,3 +156,23 @@ export interface FxDailySummaryContextData {
     duration: number;
 }
   
+// イベントを型で管理
+
+// Type alias https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
+export type ContactEvent = {
+    // means category only takes the value of 'contract'
+    category: 'contact'
+
+    // means action attribute only takes the value of 'submit_form'
+    action: 'submit_form'
+}
+  
+export type ClickEvent = {
+    category: 'other'
+    action: 'click'
+}
+export type GaEvent = (ContactEvent | ClickEvent) & {
+    // whatis Record ? object type whose property keys are Keys and whose property values are Type https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type
+    label?: Record<string, string | number | boolean>
+    value?: string
+}
