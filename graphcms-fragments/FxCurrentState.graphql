@@ -1,0 +1,7 @@
+fragment FxCurrentState on FxCurrentState {
+  stage
+  remoteId: id
+  createdAt
+  updatedAt
+  publishedAt
+}

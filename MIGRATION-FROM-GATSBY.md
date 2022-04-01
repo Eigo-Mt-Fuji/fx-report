@@ -33,7 +33,7 @@ npx create-next-app@latest --typescript
 - src/pages/fx-reports/index.mdx - そのまま引き継ぐ
 - src/pages/404.tsx - いったん破棄
 - src/pages/index.tsx - そのまま引き継ぐ
-    - package.json - 引き継ぎ(一部修正)
+- package.json - 引き継ぎ(一部修正)
     - name": "fx-report",
     - "description": "A simple web application for graphical reporting your fx trading history.",
     - "version": "0.1.0",
@@ -259,3 +259,13 @@ npx create-next-app@latest --typescript
       - Lighthouse に監査したい URL を指定して実行すると、ページに対する集中的なテストを実行してパフォーマンスに関するレポートを生成できます
         - https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk
 
+
+## 備考
+
+- 後で修正する箇所にいれる定型文
+  - <!-- TODO: replace using nextjs component or plain html component -->
+
+- prettier vs linter 
+  - https://prettier.io/docs/en/integrating-with-linters.html
+    - Prettier for code formatting concerns
+    - Linters for code-quality concerns
