@@ -54,7 +54,8 @@
     "eslint-config-next": "12.1.4",
     "prettier": "2.6.1",
     "tsc": "^1.20150623.0",
-    "typescript": "4.5.5"
+    "typescript": "4.5.5",
+    "@netlify/plugin-nextjs": "^4.2.5"
   },
   "repository": {
     "type": "git",
