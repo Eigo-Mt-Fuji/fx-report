@@ -31,10 +31,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-/node_modules/*
-/.cache
-/.env.development
-/.env.production
-/public
-scripts/*.csv
-__pycache__
+# typescript
+*.tsbuildinfo
