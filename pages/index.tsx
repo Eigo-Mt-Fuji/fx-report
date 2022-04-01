@@ -1,16 +1,16 @@
+const _ = require('lodash');
+
 import type { NextPage } from 'next'
 import {useState, useEffect} from 'react'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {Nav, Card, Button, Container, Row, Col} from 'react-bootstrap';
+import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import { run as runHolder } from 'holderjs/holder';
 
+import Layout from '../components/layout';
 import * as gtag from '../components/gtag'
 import { GaEvent } from '../types';
-const _ = require('lodash');
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
 
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         gtag.event(dummyEvent);
 
         // clear
-        setMessage('');
+        setMessage({});
 
       }
     };
@@ -40,23 +40,8 @@ const Home: NextPage = () => {
     runHolder('d-block');
   }); 
   return (
-    <div className={styles.container}>
-      <Head style={{ background: 'rebeccapurple', marginBottom: '1.45rem'}}>
-        <div style={{margin: '0 auto', maxWidth: 960, padding: '1.45rem 1.0875rem',}}>
-          <h1 style={{ margin: 0 }}>
-            <Link href="/"><a>Home</a></Link>
-          </h1>
-        </div>
-      </Head>
-
-      <div style={{marginTop: '20px', marginBottom: '20px'}}>
-        <Nav className="justify-content-end" activeKey="/">
-          <Nav.Item>
-            <Nav.Link href="/">HOME</Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </div>
-      <main className={styles.main}>
+    <Layout>
+      <div className={styles.container}>
         <h1>サイトマップ</h1>
         <Container>
             <Row key="sitemapRow">
@@ -69,17 +54,14 @@ const Home: NextPage = () => {
                     </Card.Body>
                   </Card>
                 </Col>
+              
             </Row>
         </Container>
         <form onSubmit={handleSubmit}>
           <button type="submit">submit</button>
         </form>
-      </main>
-
-      <footer className={styles.footer}>
-        © {new Date().getFullYear()}, {'fujio'}
-      </footer>
-    </div>
+      </div>
+    </Layout>
   )
 }
 
