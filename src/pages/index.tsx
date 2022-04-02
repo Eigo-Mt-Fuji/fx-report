@@ -34,7 +34,7 @@ const Home: NextPage = () => {
         setMessage({});
 
       }
-    };
+     };
   // useEffect( () => {
 
   //   run('d-block');

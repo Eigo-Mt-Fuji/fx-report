@@ -1,3 +1,4 @@
+
 ---
 title: FX投機 ほうれんそう。ジャリンジャリン稼ぐぜ!
 path: /fx-reports
@@ -11,13 +12,11 @@ import FxReviewImage20210203 from "../../components/fx-reports/fx-review-image20
 import FxPriceLotCheetSheet from "../../components/fx-reports/fx-price-lot-cheetsheet";
 import FxSummaryView from "../../components/fx-reports/fx-summary-view";
 import loadFxTransactionsAll from "../../models/fx-reports/fx-transaction-csv-loader";
-import { FxTransactionsData } from "../../types";
 
-export function getStaticProps({ params }: any) {
-  // TODO: ./src/pages/fx-reports/index.mdx Could not parse import/exports with acorn: SyntaxError: Unexpected token
-  const data: FxTransactionsData = loadFxTransactionsAll();
+export async function getStaticProps({ params }) {
+  const data = await loadFxTransactionsAll();
 
-  return { props: { data } };
+  return { props: { data: data } };
 }
 
 ## ABOUT
@@ -38,81 +37,81 @@ export function getStaticProps({ params }: any) {
 
 `この金でどうだ..!`
 
-<FxAnnualReport data={this.props.data} year="2022" dream={3600000} >一年間の利益(成績)をグラフにまとめました</FxAnnualReport>
+<FxAnnualReport data={props.data} year="2022" dream={3600000} >一年間の利益(成績)をグラフにまとめました</FxAnnualReport>
 
 ## 月次成績
 
 ### 2022-03
 
-<FxMonthlyReport data={this.props.data} month="2022/03" bars={["profit", "pips" ]} aggregate="daily"/>
+<FxMonthlyReport data={props.data} month="2022/03" bars={["profit", "pips" ]} aggregate="daily"/>
 
-<FxSummaryView data={this.props.data}  month="2022/03" />
+<FxSummaryView data={props.data}  month="2022/03" />
 
 ### 2022-02
 
-<FxMonthlyReport data={this.props.data} month="2022/02" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2022/02" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2022/02" />
+<FxSummaryView data={props.data}  month="2022/02" />
 
 ### 2022-01
 
-<FxMonthlyReport data={this.props.data} month="2022/01" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2022/01" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2022/01" />
+<FxSummaryView data={props.data}  month="2022/01" />
 
 ### 2021-12
 
-<FxMonthlyReport data={this.props.data} month="2021/12" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/12" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/12" />
+<FxSummaryView data={props.data}  month="2021/12" />
 
 ### 2021-11
 
-<FxMonthlyReport data={this.props.data} month="2021/11" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/11" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/11" />
+<FxSummaryView data={props.data}  month="2021/11" />
 
 ### 2021-10
 
-<FxMonthlyReport data={this.props.data} month="2021/10" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/10" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/10" />
+<FxSummaryView data={props.data}  month="2021/10" />
 
 ### 2021-09
 
-<FxMonthlyReport data={this.props.data} month="2021/09" bars={["profit", "pips" ]} aggregate="daily"/>
+<FxMonthlyReport data={props.data} month="2021/09" bars={["profit", "pips" ]} aggregate="daily"/>
 
-<FxSummaryView data={this.props.data}  month="2021/09" />
+<FxSummaryView data={props.data}  month="2021/09" />
 
 ### 2021-08
 
-<FxMonthlyReport data={this.props.data} month="2021/08" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/08" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/08" />
+<FxSummaryView data={props.data}  month="2021/08" />
 
 ### 2021-07
 
-<FxMonthlyReport data={this.props.data} month="2021/07" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/07" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/07" />
+<FxSummaryView data={props.data}  month="2021/07" />
 
 ### 2021-06
 
-<FxMonthlyReport data={this.props.data} month="2021/06" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/06" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/06" />
+<FxSummaryView data={props.data}  month="2021/06" />
 
 ### 2021-05
 
-<FxMonthlyReport data={this.props.data} month="2021/05" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/05" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/05" />
+<FxSummaryView data={props.data}  month="2021/05" />
 
 ### 2021-04
 
-<FxMonthlyReport data={this.props.data} month="2021/04" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/04" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/04" />
+<FxSummaryView data={props.data}  month="2021/04" />
 
 * 検討
   * 損切り戦略
@@ -241,9 +240,9 @@ export function getStaticProps({ params }: any) {
 * 3月2周目終了時点で 60万円の収支プラス。通年168万円の収支プラス。
 * 評価損益が-400万円。元金 月初1066万 -> 1126万 / 買い建15 / 売り建90
 
-<FxMonthlyReport data={this.props.data} month="2021/03" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/03" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/03" />
+<FxSummaryView data={props.data}  month="2021/03" />
 
 * 振り返り
   * 3月は大きなトレンドに乗って前半に50万を超える利益を得た。
@@ -307,9 +306,9 @@ export function getStaticProps({ params }: any) {
 * 評価損益が-270万円。元金 月初400万 -> 1066万 / 買い建30 / 売り建109
 * 警戒: 米金利上昇、株式市場バブル崩壊.. 急なドル高(相対的円安)によるロスカット・塩漬け注意
 
-<FxMonthlyReport data={this.props.data} month="2021/02" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/02" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/02" />
+<FxSummaryView data={props.data}  month="2021/02" />
 
 * 振り返り
   * 2月1日の上昇トレンドの転換を感知できず・受け入れもできず売りを入れては損失を出す
@@ -347,9 +346,9 @@ export function getStaticProps({ params }: any) {
 * 1月末時点で、52万円の収支プラス。通年52万円の収支プラス。
 * 元金 月初384万 -> 400万 / 買い建30 / 売り建 50
 
-<FxMonthlyReport data={this.props.data} month="2021/01" bars={["profit", "pips" ]} aggregate="weekly"/>
+<FxMonthlyReport data={props.data} month="2021/01" bars={["profit", "pips" ]} aggregate="weekly"/>
 
-<FxSummaryView data={this.props.data}  month="2021/01" />
+<FxSummaryView data={props.data}  month="2021/01" />
 
 * 当面400万での運用を継続します。余剰利益39万を証券口座に振替済
 

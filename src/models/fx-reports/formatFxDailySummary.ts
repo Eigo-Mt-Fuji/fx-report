@@ -17,7 +17,6 @@ export default function formatFxDailySummary(month: string, data: FxTransactions
 
         // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push
         buffer.push(item);
-
         // 建玉の新規売買のレコードの場合
         if (item.buysell === '新規売' || item.buysell === '新規買') { 
 
