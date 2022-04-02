@@ -16,6 +16,7 @@ export interface FxMonthlyTransactionsResponse {
 
 export interface FxAnnualChartProps {
     year: string;
+    data: FxTransactionsData;
     dream: number;
 }
 
@@ -29,7 +30,7 @@ export interface FxMonthlyComopsedChartProps {
     ticks: any[];
 
 }
-export interface FxTransactionDataCsvItem {
+export interface FxTransactionsDataCsvItem {
     order_no: string;
     date: string;
     lot_number: string;
@@ -45,20 +46,20 @@ export interface FxTransactionDataCsvItem {
 }
 export interface FxTransactionsDataNode {
 
-    items: FxTransactionDataCsvItem[];
+    items: FxTransactionsDataCsvItem[];
 }
-export interface FxTransactionDataRecord {
+export interface FxTransactionsDataRecord {
     date: string;
     total_pl: string;
     buysell: string;
     price: number;
 } 
-export interface FxTransactionDataNodeWrapper {
+export interface FxTransactionsDataNodeWrapper {
 
     nodes: FxTransactionsDataNode[];
 }
 export interface FxTransactionsData {
-    allFxTransactionsData: FxTransactionDataNodeWrapper;
+    allFxTransactionsData: FxTransactionsDataNodeWrapper;
 }
 
 export interface FxCurrentState {
@@ -86,6 +87,7 @@ export interface FxCurrentStateHookContext {
 
 export interface FxMonthlyReportProps {
     month: string;
+    data: FxTransactionsData;
     aggregate:string;
 }
 
@@ -118,6 +120,7 @@ export interface MyPlayGroundMapProps {
 
 export interface FxSummaryViewProps {
     month: string;
+    data: FxTransactionsData;
 }
 export interface FxDailySummaryDurationCountEntry {
     [key: string]: number;

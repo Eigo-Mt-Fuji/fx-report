@@ -1,4 +1,4 @@
-import { FxTransactionDataCsvItem, FxTransactionsDataNode, FxTransactionDataNodeWrapper, FxTransactionsData } from "../../types";
+import { FxTransactionsDataCsvItem, FxTransactionsDataNode, FxTransactionsDataNodeWrapper, FxTransactionsData } from "../../types";
 // https://nodejs.org/api/fs.html#filehandlecreatereadstreamoptions
 // FYI Streams compatibility with async generators and async iterators  https://nodejs.org/api/stream.html#streams-compatibility-with-async-generators-and-async-iterators
 const fs = require("fs");
@@ -18,15 +18,15 @@ function findAllFxTransactionCsvFiles() : string[] {
     return results;
 }
 
-function loadFxTransactionCsv(csvAbsolutePath: string) : FxTransactionDataCsvItem[] {
+function loadFxTransactionCsv(csvAbsolutePath: string) : FxTransactionsDataCsvItem[] {
         
     const stream = fs.createReadStream(csvAbsolutePath);
     const reader = readline.createInterface({ input: stream }):
-    const arr: FxTransactionDataCsvItem[] = [];
+    const arr: FxTransactionsDataCsvItem[] = [];
 
     reader.on("line", (row: string) => { 
         const columns: string[] = row.split(",");
-        const obj: FxTransactionDataCsvItem = {
+        const obj: FxTransactionsDataCsvItem = {
             order_no: columns[0],
             date: columns[1],
             lot_number: columns[2],
@@ -47,7 +47,7 @@ function loadFxTransactionCsv(csvAbsolutePath: string) : FxTransactionDataCsvIte
 export function loadFxTransactionsAll() : FxTransactionsData {
     const pathArray = findAllFxTransactionCsvFiles();
     const nodes: FxTransactionsDataNode[]  = pathArray.map( (csvPath: string) => {
-        const items: FxTransactionDataCsvItem[] = loadFxTransactionCsv(csvPath);
+        const items: FxTransactionsDataCsvItem[] = loadFxTransactionCsv(csvPath);
 
         return {
             items
@@ -57,6 +57,6 @@ export function loadFxTransactionsAll() : FxTransactionsData {
     return {
         allFxTransactionsData: {
             nodes: nodes
-        } as FxTransactionDataNodeWrapper
+        } as FxTransactionsDataNodeWrapper
     }
 }

@@ -39,7 +39,7 @@ const FxPriceLotCheetSheet = () => {
     useEffect(() => {
         async function fetchLatestFxState() {
             const data = await request(
-                process.env.GATSBY_GRAPHCMS_ENDPOINT,
+                process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
                 `
                 query LatestFxState {
                     fxCurrentStates(orderBy : timestamp_DESC, first: 1) {

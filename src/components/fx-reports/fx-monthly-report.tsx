@@ -1,7 +1,4 @@
 import React, {useState} from 'react';
-// TODO: replace using nextjs component or plain html component
-import { useStaticQuery, graphql } from 'gatsby'
-
 import PropTypes from 'prop-types'
 
 import {Nav} from 'react-bootstrap';
@@ -19,19 +16,7 @@ const FxMonthlyReport = (props: FxMonthlyReportProps) => {
 
     const [aggregate, setAggregate] = useState<string|null>(props.aggregate);
     
-    // TODO: replace using nextjs component or plain html component
-    const transactions = useStaticQuery(graphql`{
-        allFxTransactionsData {
-            nodes {
-                items {
-                    date
-                    buysell
-                    price
-                    total_pl
-                }
-            }
-        }
-    }`)
+    const transactions = props.data;
     const daily = formatFxDailyTransactions(transactions, props.month);
     const data = aggregate === 'weekly' ? formatFxWeeklyTransactions(transactions, props.month) : daily;
     const ticks = calculateFxProfitLossTicks(data, 4);
@@ -56,6 +41,7 @@ const FxMonthlyReport = (props: FxMonthlyReportProps) => {
 
 FxMonthlyReport.propTypes = {
     aggregate: PropTypes.string.isRequired,
+    data: PropTypes.object.isRequired,
     month: PropTypes.string.isRequired,
 };
 

@@ -1,6 +1,4 @@
 import React from 'react';
-// TODO: replace using nextjs component or plain html component
-import { useStaticQuery, graphql } from 'gatsby';
 import formatFxMonthlyTransactionsStacked from '../../models/fx-reports/formatFxMonthlyTransactionsStacked';
 import formatFxProfitLossYen from '../../models/fx-reports/formatFxProfitLossYen';
 import PropTypes from 'prop-types'
@@ -13,19 +11,7 @@ import FxAnnualStackedBarChart from './fx-annual-stacked-barchart';
 
 const FxAnnualReport = (props: FxAnnualChartProps) => {
     
-    // TODO: replace using nextjs component or plain html component
-    const transactions:FxTransactionsData = useStaticQuery(graphql`{
-        allFxTransactionsData {
-            nodes {
-                items {
-                    date
-                    buysell
-                    price
-                    total_pl
-                }
-            }
-        }
-    }`)
+    const transactions:FxTransactionsData = props.data;
     const res: FxMonthlyTransactionsResponse = formatFxMonthlyTransactionsStacked(transactions, props.year, props.dream);
     
     const actualSum: number  = res.actualSum;
@@ -44,6 +30,7 @@ const FxAnnualReport = (props: FxAnnualChartProps) => {
 
 FxAnnualReport.propTypes = {
     year: PropTypes.string.isRequired,
+    data: PropTypes.object.isRequired,
     dream: PropTypes.number.isRequired,
 };
 export default FxAnnualReport;
