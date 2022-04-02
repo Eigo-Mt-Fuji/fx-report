@@ -13,11 +13,6 @@ import FxSummaryView from "../../components/fx-reports/fx-summary-view";
 import loadFxTransactionsAll from "../../models/fx-reports/fx-transaction-csv-loader";
 import { FxTransactionsData } from "../../types";
 
-export function getStaticProps({ params }: any) {
-  const data: FxTransactionsData = loadFxTransactionsAll();
-
-  return { props: { data } };
-}
 
 ## ABOUT
 

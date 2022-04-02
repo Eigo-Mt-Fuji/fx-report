@@ -14,7 +14,7 @@ import {FxMonthlyReportProps} from '../../types';
 
 const FxMonthlyReport = (props: FxMonthlyReportProps) => {
 
-    const [aggregate, setAggregate] = useState<string|null>(props.aggregate);
+    const [aggregate, setAggregate] = useState<string|undefined>(props.aggregate);
     
     const transactions = props.data;
     const daily = formatFxDailyTransactions(transactions, props.month);
@@ -23,7 +23,7 @@ const FxMonthlyReport = (props: FxMonthlyReportProps) => {
 
     return (
         <>
-            <Nav variant="pills" defaultActiveKey={aggregate} onSelect={ (eventKey: string|null, _event) => { setAggregate(eventKey) }}>
+            <Nav variant="pills" defaultActiveKey={aggregate} onSelect={ (eventKey: any, _event) => { setAggregate(eventKey) }}>
                 <Nav.Item>
                     <Nav.Link eventKey="weekly">週足</Nav.Link>
                 </Nav.Item>

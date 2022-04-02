@@ -7,7 +7,7 @@ import {FxTransactionsTableProps} from '../../types';
 
 const FxTransactionsTable: (props: FxTransactionsTableProps) => any = (props: FxTransactionsTableProps) => {
 
-    const renderRow = (d) => {
+    const renderRow = (d: any) => {
         
         return (
             <Row key={d.name}>

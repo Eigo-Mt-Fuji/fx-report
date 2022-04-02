@@ -1,6 +1,6 @@
-import {FxTransactionDataRecord} from '../../types';
+import {FxTransactionsDataRecord} from '../../types';
 
-export default function getSettlementOrderRecords(buffer: any[]) : FxTransactionDataRecord[] {
+export default function getSettlementOrderRecords(buffer: any[]) : FxTransactionsDataRecord[] {
 
     return buffer.filter( (item) => {
 

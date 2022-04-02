@@ -25,8 +25,8 @@ const FxMonthlyComopsedChart = (props: FxMonthlyComopsedChartProps) => {
     ];
 
     return (
-        <ResponsiveContainer>
-            <ComposedChart data={data} width={'100%'} margin={{top: 25, bottom: 25, left: 40, right: 20}}>
+        <ResponsiveContainer width={'100%'} >
+            <ComposedChart data={data} margin={{top: 25, bottom: 25, left: 40, right: 20}}>
                 <CartesianGrid strokeDasharray="2 2" />
                 <XAxis dataKey="name" padding={{left: 30, right: 30}} />
                 <YAxis yAxisId={0} ticks={ticks} type="number" domain={[10, 'dataMax - 300']} padding={{top: 20, bottom: 20}}>

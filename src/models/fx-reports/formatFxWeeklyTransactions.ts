@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 import moment from 'moment';
-import { FxTransactionsData, FxTransactionDataRecord } from '../../types';
+import { FxTransactionsData, FxTransactionsDataRecord } from '../../types';
 
 import getOpenInterestRecord from './getOpenInterestRecord';
 import getSettlementOrderRecords from './getSettlementOrderRecords';
@@ -47,16 +47,16 @@ export default function formatFxWeeklyTransactions(data: FxTransactionsData, mon
 
             // 取引を１セット分処理する
             // 建玉の新規売買取引レコードを探す
-            const openInterestRecord: FxTransactionDataRecord|null = getOpenInterestRecord(buffer);
+            const openInterestRecord: FxTransactionsDataRecord|null = getOpenInterestRecord(buffer);
             if (openInterestRecord) {
 
                 // 決済取引レコードを探す
-                const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
+                const settlementOrderRecords: FxTransactionsDataRecord[] = getSettlementOrderRecords(buffer);
 
-                const contexts: any[] = settlementOrderRecords.filter( (record: FxTransactionDataRecord) => { 
+                const contexts: any[] = settlementOrderRecords.filter( (record: FxTransactionsDataRecord) => { 
                     // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter#parameters
                     return record.date.startsWith(month);
-                }).map( (record: FxTransactionDataRecord) => {
+                }).map( (record: FxTransactionsDataRecord) => {
 
                     const week = convertToWeek(month, record.date);
         

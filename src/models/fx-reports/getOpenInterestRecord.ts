@@ -1,6 +1,6 @@
-import {FxTransactionDataRecord} from '../../types';
+import {FxTransactionsDataRecord} from '../../types';
 
-export default function getOpenInterestRecord(buffer: any[]) : FxTransactionDataRecord|null {
+export default function getOpenInterestRecord(buffer: any[]) : FxTransactionsDataRecord|null {
     
     const result = buffer.filter( (item) => {
 

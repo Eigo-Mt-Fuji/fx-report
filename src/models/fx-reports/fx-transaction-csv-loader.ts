@@ -1,6 +1,7 @@
 import { FxTransactionsDataCsvItem, FxTransactionsDataNode, FxTransactionsDataNodeWrapper, FxTransactionsData } from "../../types";
 // https://nodejs.org/api/fs.html#filehandlecreatereadstreamoptions
 // FYI Streams compatibility with async generators and async iterators  https://nodejs.org/api/stream.html#streams-compatibility-with-async-generators-and-async-iterators
+// TODO: Native Node.js APIs are not supported in the Edge Runtime. Found `fs` imported.
 const fs = require("fs");
 const readline = require("readline");
 const glob = require( 'glob' );
@@ -9,7 +10,7 @@ const path = require( 'path' );
 function findAllFxTransactionCsvFiles() : string[] {
     const results: string[] = [];
 
-    glob.sync( './src/data/fx_transactions/*.csv' ).forEach( function( file ) {
+    glob.sync( './src/data/fx_transactions/*.csv' ).forEach( function( file: string ) {
         // resolves a sequence of paths or path segments into an absolute path https://nodejs.org/api/path.html#pathresolvepaths
         const csvAbsolutePath = path.resolve( file );
 
@@ -21,7 +22,7 @@ function findAllFxTransactionCsvFiles() : string[] {
 function loadFxTransactionCsv(csvAbsolutePath: string) : FxTransactionsDataCsvItem[] {
         
     const stream = fs.createReadStream(csvAbsolutePath);
-    const reader = readline.createInterface({ input: stream }):
+    const reader = readline.createInterface({ input: stream });
     const arr: FxTransactionsDataCsvItem[] = [];
 
     reader.on("line", (row: string) => { 

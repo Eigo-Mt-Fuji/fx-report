@@ -1,9 +1,9 @@
-const _ = require('lodash');
-
-import type { NextPage } from 'next'
-import {useState, useEffect} from 'react'
+import { NextPage } from 'next';
+import {useState, useEffect} from 'react';
 import {Card, Button, Container, Row, Col} from 'react-bootstrap';
-import { run as runHolder } from 'holderjs/holder';
+
+const _ = require('lodash');
+// const {run} = require('holderjs/holder');
 
 import Layout from '../components/layout';
 import * as gtag from '../components/gtag'
@@ -35,10 +35,10 @@ const Home: NextPage = () => {
 
       }
     };
-  useEffect( () => {
+  // useEffect( () => {
 
-    runHolder('d-block');
-  }); 
+  //   run('d-block');
+  // }); 
   return (
     <Layout>
       <div className={styles.container}>
@@ -63,6 +63,6 @@ const Home: NextPage = () => {
       </div>
     </Layout>
   )
-}
+};
 
-export default Home
+export default Home;

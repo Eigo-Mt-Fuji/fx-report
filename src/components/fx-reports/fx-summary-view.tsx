@@ -1,9 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
-// TODO: replace using nextjs component or plain html component
-import { useStaticQuery, graphql } from 'gatsby'
-
 import Table from 'react-bootstrap/Table';
 import formatFxDailySummary from '../../models/fx-reports/formatFxDailySummary';
 import {FxDailySummaryContext, FxSummaryViewProps, FxTransactionsData} from '../../types';
@@ -28,7 +25,6 @@ import FxSummaryViewDurationBarChart from './fx-summary-view-duration-barchart'
 **/
 const FxSummaryView = (props: FxSummaryViewProps) => {
 
-    // TODO: replace using nextjs component or plain html component
     const transactions: FxTransactionsData = props.data;
     const summaries = formatFxDailySummary(props.month, transactions);
     

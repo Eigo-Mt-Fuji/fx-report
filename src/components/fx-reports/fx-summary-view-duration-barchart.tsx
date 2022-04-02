@@ -58,8 +58,8 @@ const FxSummaryViewDurationBarChart = (props: FxSummaryViewDurationBarChartProps
         });
 
     return (
-        <ResponsiveContainer>
-            <BarChart data={data} width={'100%'} margin={{top: 25, bottom: 25, left: 50, right: 50}}>
+        <ResponsiveContainer width={'100%'} >
+            <BarChart data={data} margin={{top: 25, bottom: 25, left: 50, right: 50}}>
                 <CartesianGrid strokeDasharray="2 2" />
                 <XAxis dataKey="date" padding={{left: 30, right: 30}}/>
                 <YAxis yAxisId={0} type="number" padding={{top: 20, bottom: 20}}>
