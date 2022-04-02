@@ -13,6 +13,12 @@ import FxSummaryView from "../../components/fx-reports/fx-summary-view";
 import loadFxTransactionsAll from "../../models/fx-reports/fx-transaction-csv-loader";
 import { FxTransactionsData } from "../../types";
 
+export function getStaticProps({ params }: any) {
+  // TODO: ./src/pages/fx-reports/index.mdx Could not parse import/exports with acorn: SyntaxError: Unexpected token
+  const data: FxTransactionsData = loadFxTransactionsAll();
+
+  return { props: { data } };
+}
 
 ## ABOUT
 
