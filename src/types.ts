@@ -29,8 +29,23 @@ export interface FxMonthlyComopsedChartProps {
     ticks: any[];
 
 }
-export interface FxTransactionsData {
-    allFxTransactionsData: any;
+export interface FxTransactionDataCsvItem {
+    order_no: string;
+    date: string;
+    lot_number: string;
+    currency: string;
+    buysell: string;
+    amount: string;
+    price: string;  
+    rate: string;
+    fee: string;
+    swap: string;
+    pl: string;
+    total_pl: string;
+}
+export interface FxTransactionsDataNode {
+
+    items: FxTransactionDataCsvItem[];
 }
 export interface FxTransactionDataRecord {
     date: string;
@@ -38,6 +53,14 @@ export interface FxTransactionDataRecord {
     buysell: string;
     price: number;
 } 
+export interface FxTransactionDataNodeWrapper {
+
+    nodes: FxTransactionsDataNode[];
+}
+export interface FxTransactionsData {
+    allFxTransactionsData: FxTransactionDataNodeWrapper;
+}
+
 export interface FxCurrentState {
     deposit: number;
     valuationGainLoss: number;
