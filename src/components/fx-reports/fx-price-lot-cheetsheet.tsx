@@ -12,17 +12,18 @@ import FxCurrentStateForm from './fx-current-state-form';
 
 // TODO: gatsby graphql, gatsby-source-graphcms, graphql-request, jdbc connectの違いと、graphqlのクエリ実行をするのに一番適した方法を知りたい
 const FxPriceLotCheetSheet = () => {
-    const [latestRate, setLatestRate] = useState(null);
+    const [latestRate, setLatestRate] = useState<any>(null);
     // 予算で購入可能なロット数の範囲で、現在のポジション状況を踏まえて預託保証金率を計算・許容範囲の判定
-    const [currentState, setCurrentState]  = useState(null);
-    const budget = 100000;
+    const [currentState, setCurrentState]  = useState<any>(null);
+    const budget: number = 100000;
     const allowedDepositRate = 180;
-    const handleCurrentStateChange = (state) => {
+    const handleCurrentStateChange = (state: any) => {
         console.log(state);
         setCurrentState(state);
     };
-    const renderEstimateLotResults = (results) => {
-        return results.map( (result, index) => {
+
+    const renderEstimateLotResults = (results: any[]) => {
+        return results.map( (result: any, index: number) => {
             // TODO: control col hidden on small devices
             return (
                 <Row key={`estimateLotPattern${index}`}>
@@ -37,9 +38,9 @@ const FxPriceLotCheetSheet = () => {
     };
 
     useEffect(() => {
-        async function fetchLatestFxState() {
+        async function fetchLatestFxState(endpoint: string) {
             const data = await request(
-                process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT,
+                endpoint,
                 `
                 query LatestFxState {
                     fxCurrentStates(orderBy : timestamp_DESC, first: 1) {
@@ -67,8 +68,11 @@ const FxPriceLotCheetSheet = () => {
             fetchLatestRate();
         }
         if (!currentState) {
-
-            fetchLatestFxState();
+            
+            const endpoint: string|undefined = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
+            if (endpoint) {
+                fetchLatestFxState(endpoint);
+            }
         }
     });
     
@@ -78,7 +82,7 @@ const FxPriceLotCheetSheet = () => {
     }
     const rate = Math.floor(latestRate.rates.JPY * 1000) / 1000;
 
-    const estimateResults = calculateFxLotEstimate(
+    const estimateResults: any[] = calculateFxLotEstimate(
         rate, 
         currentState,
         budget, 
@@ -95,7 +99,7 @@ const FxPriceLotCheetSheet = () => {
                 </Row>
                 <Row key="lotEstimateTableDescription">
                     <Col>
-                        <p style={{fontSize: '14px', marginBottom: '5px'}}>※ロット数...予備の予算{formatFxProfitLossYen(budget)}で追加購入可能なロット数を5ロット単位で計算しています。</p>
+                        <p style={{fontSize: '14px', marginBottom: '5px'}}>※ロット数...予備の予算{formatFxProfitLossYen(`${budget}`)}で追加購入可能なロット数を5ロット単位で計算しています。</p>
                         <p style={{fontSize: '14px', marginBottom: '5px'}}>※許容OK/NG... 預託保証金率 {allowedDepositRate}% に収まるか為替レートから自動計算しています。</p>
                         <p style={{fontSize: '14px', marginBottom: '5px'}}>※{latestRate.date}時点為替レート 1USD={rate}円 を元に算出しています。</p>
                         <p style={{fontSize: '14px', marginBottom: '5px'}}>※現在取引状況のフォームには {moment(currentState.timestamp).format('YYYY-MM-DD')}時点の取引状況を初期表示しています。</p>
@@ -118,11 +122,11 @@ const FxPriceLotCheetSheet = () => {
             <Container>
                 <Row  key="pattern1">
                     <Col>25万円(2週間の利益目標)</Col>
-                    <Col><FxPriceLot money_jpy="250000" rate={rate} /></Col>
+                    <Col><FxPriceLot money_jpy="250000" rate={`${rate}`} /></Col>
                 </Row>
                 <Row key="pattern3">
                     <Col>50万円(1ヶ月分の利益目標)</Col>
-                    <Col><FxPriceLot money_jpy="500000" rate={rate} /></Col>
+                    <Col><FxPriceLot money_jpy="500000" rate={`${rate}`} /></Col>
                 </Row>
             </Container>
         </div>

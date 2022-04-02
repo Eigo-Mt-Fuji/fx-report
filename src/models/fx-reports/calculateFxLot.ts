@@ -1,4 +1,4 @@
-export default function calculateFxLot(money_jpy, rate, trade_unit, leverage) {
+export default function calculateFxLot(money_jpy: number, rate: number, trade_unit: number, leverage: number) {
 
     // ロット数を単純計算
     const price_per_lot = rate * (trade_unit / leverage);

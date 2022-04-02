@@ -1,4 +1,4 @@
-import {FxDailySummaryContext,FxTransactionDataRecord,FxTransactionsData, FxDailySummaryContextData} from '../../types'
+import {FxDailySummaryContext,FxTransactionsDataRecord,FxTransactionsData, FxDailySummaryContextData} from '../../types'
 import moment from 'moment';
 import formatFxDurationMap from './formatFxDurationMap';
 import getOpenInterestRecord from './getOpenInterestRecord';
@@ -17,22 +17,21 @@ export default function formatFxDailySummary(month: string, data: FxTransactions
 
         // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push
         buffer.push(item);
-
         // 建玉の新規売買のレコードの場合
         if (item.buysell === '新規売' || item.buysell === '新規買') { 
 
             // 取引を１セット分処理する
             // 建玉の新規売買取引レコードを探す
-            const openInterestRecord: FxTransactionDataRecord|null = getOpenInterestRecord(buffer);
+            const openInterestRecord: FxTransactionsDataRecord|null = getOpenInterestRecord(buffer);
             if (openInterestRecord) {
 
                 // 決済取引レコードを探す
-                const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
+                const settlementOrderRecords: FxTransactionsDataRecord[] = getSettlementOrderRecords(buffer);
 
-                const contexts: FxDailySummaryContextData[] = settlementOrderRecords.filter( (record: FxTransactionDataRecord) => { 
+                const contexts: FxDailySummaryContextData[] = settlementOrderRecords.filter( (record: FxTransactionsDataRecord) => { 
                     // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter#parameters
                     return record.date.startsWith(month);
-                }).map( (record: FxTransactionDataRecord) => {
+                }).map( (record: FxTransactionsDataRecord) => {
                     const date: string = record.date.split(' ')[0];
                     // see https://momentjs.com/docs/#/parsing/string-format/
                     const aggregateKey: string = moment(date, 'YYYY/MM/DD').format('MM/DD');

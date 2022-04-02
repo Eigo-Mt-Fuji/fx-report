@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import FxReviewImage20210203 from '../images/fx-review-20210203.png'
+import FxReviewImage20210203 from '../../images/fx-review-20210203.png'
 
 const FxReviewImage = () => {
 

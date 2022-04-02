@@ -2,7 +2,11 @@ import React from 'react'
 import SEO from './seo';
 import Header from './header'
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+
+  children: any;
+}
+const Layout = ({ children } : LayoutProps) => {
 
   return (
     <>

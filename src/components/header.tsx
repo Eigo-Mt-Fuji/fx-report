@@ -5,7 +5,11 @@ import React from 'react'
 
 import {Nav} from 'react-bootstrap';
 
-const Header = ({ siteTitle }: any) => (
+interface HeaderProps { 
+  siteTitle: string;
+  children: any;
+}
+const Header = ({ siteTitle, children }: HeaderProps) => (
   <>
 
       <header

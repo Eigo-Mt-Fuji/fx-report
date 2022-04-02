@@ -1,7 +1,7 @@
 
-export default function calculateFxProfitLossTicks(data, profitTicksNum = 4) {
+export default function calculateFxProfitLossTicks(data: any, profitTicksNum:number = 4) {
     const ticks = [];
-    const profits = data.map( (value) => parseInt(value.profit));
+    const profits = data.map( (value: any) => parseInt(value.profit));
 
     const maxProfit = Math.max(...profits);
     const minProfit = Math.min(...profits);

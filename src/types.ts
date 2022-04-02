@@ -105,7 +105,7 @@ export interface FxProfitLossLabelProps {
 
 export interface FxTransactionsTableProps {
     month: string;
-    data: FxTransactionsData;
+    data: any[];
 }
 
 export interface MyPlayGroundMapProps {

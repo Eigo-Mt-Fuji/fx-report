@@ -4,14 +4,14 @@ import config from '../config'
 
 interface SEOProps {
   description: string;
-  title: string
+  title: string;
 }
 export default function SEO(props: SEOProps) {
   const siteTitle = config.title
   console.log(props.description);
   return (
     <Head>
-      <title>{`${title} | ${siteTitle}`}</title>
+      <title>{`${props.title} | ${siteTitle}`}</title>
       <meta name="description" content={props.description} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={props.title} />

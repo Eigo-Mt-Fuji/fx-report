@@ -2,7 +2,7 @@ import React from 'react';
 import formatFxProfitLossYen from '../../models/fx-reports/formatFxProfitLossYen';
 import {FxProfitLossLabelProps} from '../../types';
 
-const FxProfitLossLabel = (props: FxProfitLossLabelProps) => {
+const FxProfitLossLabel = (props: any) => {
 
     const {x, y, fill, value} = props;
 

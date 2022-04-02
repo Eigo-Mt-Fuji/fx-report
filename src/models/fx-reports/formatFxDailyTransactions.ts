@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { FxTransactionsData, FxTransactionDataRecord } from '../../types';
+import { FxTransactionsData, FxTransactionsDataRecord } from '../../types';
 const _ = require('lodash');
 
 import getOpenInterestRecord from './getOpenInterestRecord';
@@ -15,11 +15,11 @@ function processTransactionBuffer(month: string, buffer: any[]) {
     const openInterestRecord: any = getOpenInterestRecord(buffer);
 
     // 決済取引レコードを探す
-    const settlementOrderRecords: FxTransactionDataRecord[] = getSettlementOrderRecords(buffer);
-    return settlementOrderRecords.filter( (record: FxTransactionDataRecord) => { 
+    const settlementOrderRecords: FxTransactionsDataRecord[] = getSettlementOrderRecords(buffer);
+    return settlementOrderRecords.filter( (record: FxTransactionsDataRecord) => { 
         // see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/filter#parameters
         return record.date.startsWith(month);
-    }).map( (record: FxTransactionDataRecord) => {
+    }).map( (record: FxTransactionsDataRecord) => {
         const date: string = record.date.split(' ')[0];
         // see https://momentjs.com/docs/#/parsing/string-format/
         const aggregateKey: string = moment(date, 'YYYY/MM/DD').format('MM/DD');
