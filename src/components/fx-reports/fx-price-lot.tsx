@@ -1,5 +1,5 @@
 import React from 'react';
-import calculateFxLot from '../../models/fx-reports/calculateFxLot';
+import calculateFxLot from '../../models/fx-reports/calculate-fx-lot';
 import {FxPriceLotProps} from '../../types';
 
 const FxPriceLot: (props: FxPriceLotProps) => any = (props: FxPriceLotProps) => {

@@ -3,8 +3,8 @@ const _ = require('lodash');
 import moment from 'moment';
 import { FxTransactionsData, FxTransactionsDataRecord } from '../../types';
 
-import getOpenInterestRecord from './getOpenInterestRecord';
-import getSettlementOrderRecords from './getSettlementOrderRecords';
+import getOpenInterestRecord from './get-open-interest-record';
+import getSettlementOrderRecords from './get-settlement-order-records';
 
 const convertToWeek = (month: string, date: string) => {
 

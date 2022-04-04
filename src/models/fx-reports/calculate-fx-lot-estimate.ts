@@ -1,5 +1,5 @@
-import calculateFxLot from './calculateFxLot';
-import formatFxProfitLossYen from './formatFxProfitLossYen';
+import calculateFxLot from './calculate-fx-lot';
+import formatFxProfitLossYen from './format-fx-profit-loss-yen';
 
 /**
  * calculateFxLotEstimate

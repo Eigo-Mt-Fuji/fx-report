@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import {Nav} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import formatFxDailyTransactions from '../../models/fx-reports/formatFxDailyTransactions';
-import formatFxWeeklyTransactions from '../../models/fx-reports/formatFxWeeklyTransactions';
-import calculateFxProfitLossTicks from '../../models/fx-reports/calculateFxProfitLossTicks';
+import formatFxDailyTransactions from '../../models/fx-reports/format-fx-daily-transactions';
+import formatFxWeeklyTransactions from '../../models/fx-reports/format-fx-weekly-transactions';
+import calculateFxProfitLossTicks from '../../models/fx-reports/calculate-fx-profit-loss-ticks';
 
 import FxMonthlyComopsedChart from './fx-monthly-composed-chart';
 import FxTransactionsTable from './fx-transactions-table';

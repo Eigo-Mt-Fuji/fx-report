@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
 import Table from 'react-bootstrap/Table';
-import formatFxDailySummary from '../../models/fx-reports/formatFxDailySummary';
+import formatFxDailySummary from '../../models/fx-reports/format-fx-daily-summary';
 import {FxDailySummaryContext, FxSummaryViewProps, FxTransactionsData} from '../../types';
 
 import FxSummaryViewDurationBarChart from './fx-summary-view-duration-barchart'

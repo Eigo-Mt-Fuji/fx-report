@@ -1,6 +1,6 @@
 import React from 'react';
-import formatFxMonthlyTransactionsStacked from '../../models/fx-reports/formatFxMonthlyTransactionsStacked';
-import formatFxProfitLossYen from '../../models/fx-reports/formatFxProfitLossYen';
+import formatFxMonthlyTransactionsStacked from '../../models/fx-reports/format-fx-monthly-transactions-stacked';
+import formatFxProfitLossYen from '../../models/fx-reports/format-fx-profit-loss-yen';
 import PropTypes from 'prop-types'
 import {
     FxTransactionsData, 

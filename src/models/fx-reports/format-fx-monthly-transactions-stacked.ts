@@ -5,8 +5,8 @@ import {
     FxMonthlyTransactionsProfitKey,
     FxTransactionsDataRecord
 } from '../../types';
-import getOpenInterestRecord from './getOpenInterestRecord';
-import getSettlementOrderRecords from './getSettlementOrderRecords';
+import getOpenInterestRecord from './get-open-interest-record';
+import getSettlementOrderRecords from './get-settlement-order-records';
 const _ = require('lodash');
 
 /**
