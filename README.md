@@ -1,4 +1,4 @@
-# fx-reports
+# fx-reports [![Netlify Status](https://api.netlify.com/api/v1/badges/8243bc73-25ce-4ce9-a306-ebe45968931d/deploy-status)](https://app.netlify.com/sites/goofy-bohr-20d740/deploys)
 
 FX取引の月次レポート DIYアプリ 
 `じゃりんじゃりん稼ぐぜ` 
