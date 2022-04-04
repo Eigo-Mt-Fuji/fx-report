@@ -1,37 +1,23 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
 import React from 'react'
-import PropTypes from 'prop-types'
-import { useStaticQuery, graphql } from 'gatsby'
-
 import SEO from './seo';
 import Header from './header'
-import './layout.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.css';
-import './neumorphism.css';
 
-const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-          description
-          author
-        }
-      }
-    }
-  `)
+interface LayoutMetaData {
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+}
+interface LayoutProps {
+
+  children: any;
+  meta: LayoutMetaData;
+}
+const Layout = ({ children, meta } : LayoutProps) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata?.title || 'Title'}>
+      <Header siteTitle={meta.title}>
       </Header>
       <div
         style={{
@@ -42,10 +28,7 @@ const Layout = ({ children }) => {
         }}
       >
         <main>
-          <SEO 
-             title={data.site.siteMetadata?.title||'portfolio-2021'}
-             description={data.site.siteMetadata?.description||'経営管理特設サイト ジャリンジャリン稼ぐぜ'}
-          />
+          <SEO  title={meta.title} description={meta.description} />
           {children}
         </main>
         <footer
@@ -53,15 +36,11 @@ const Layout = ({ children }) => {
             marginTop: '2rem',
           }}
         >
-          © {new Date().getFullYear()}, {data.site.siteMetadata?.author ||'fujio'}
+          © {meta.date},{meta.author}
         </footer>
       </div>
     </>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout

@@ -16,6 +16,7 @@ export interface FxMonthlyTransactionsResponse {
 
 export interface FxAnnualChartProps {
     year: string;
+    data: FxTransactionsData;
     dream: number;
 }
 
@@ -29,15 +30,38 @@ export interface FxMonthlyComopsedChartProps {
     ticks: any[];
 
 }
-export interface FxTransactionsData {
-    allFxTransactionsData: any;
+export interface FxTransactionsDataCsvItem {
+    order_no: string;
+    date: string;
+    lot_number: string;
+    currency: string;
+    buysell: string;
+    amount: string;
+    price: string;  
+    rate: string;
+    fee: string;
+    swap: string;
+    pl: string;
+    total_pl: string;
 }
-export interface FxTransactionDataRecord {
+export interface FxTransactionsDataNode {
+
+    items: FxTransactionsDataCsvItem[];
+}
+export interface FxTransactionsDataRecord {
     date: string;
     total_pl: string;
     buysell: string;
     price: number;
 } 
+export interface FxTransactionsDataNodeWrapper {
+
+    nodes: FxTransactionsDataNode[];
+}
+export interface FxTransactionsData {
+    allFxTransactionsData: FxTransactionsDataNodeWrapper;
+}
+
 export interface FxCurrentState {
     deposit: number;
     valuationGainLoss: number;
@@ -63,6 +87,7 @@ export interface FxCurrentStateHookContext {
 
 export interface FxMonthlyReportProps {
     month: string;
+    data: FxTransactionsData;
     aggregate:string;
 }
 
@@ -80,7 +105,7 @@ export interface FxProfitLossLabelProps {
 
 export interface FxTransactionsTableProps {
     month: string;
-    data: FxTransactionsData;
+    data: any[];
 }
 
 export interface MyPlayGroundMapProps {
@@ -95,6 +120,7 @@ export interface MyPlayGroundMapProps {
 
 export interface FxSummaryViewProps {
     month: string;
+    data: FxTransactionsData;
 }
 export interface FxDailySummaryDurationCountEntry {
     [key: string]: number;
@@ -156,3 +182,23 @@ export interface FxDailySummaryContextData {
     duration: number;
 }
   
+// イベントを型で管理
+
+// Type alias https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases
+export type ContactEvent = {
+    // means category only takes the value of 'contract'
+    category: 'contact'
+
+    // means action attribute only takes the value of 'submit_form'
+    action: 'submit_form'
+}
+  
+export type ClickEvent = {
+    category: 'other'
+    action: 'click'
+}
+export type GaEvent = (ContactEvent | ClickEvent) & {
+    // whatis Record ? object type whose property keys are Keys and whose property values are Type https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type
+    label?: Record<string, string | number | boolean>
+    value?: string
+}

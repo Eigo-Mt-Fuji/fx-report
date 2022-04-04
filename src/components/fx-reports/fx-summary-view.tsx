@@ -1,11 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment';
-import { useStaticQuery, graphql } from 'gatsby'
-
 import Table from 'react-bootstrap/Table';
-import formatFxDailySummary from '../../models/fx-reports/formatFxDailySummary';
-import {FxDailySummaryContext, FxSummaryViewProps} from '../../types';
+import formatFxDailySummary from '../../models/fx-reports/format-fx-daily-summary';
+import {FxDailySummaryContext, FxSummaryViewProps, FxTransactionsData} from '../../types';
 
 import FxSummaryViewDurationBarChart from './fx-summary-view-duration-barchart'
 /*
@@ -27,18 +25,7 @@ import FxSummaryViewDurationBarChart from './fx-summary-view-duration-barchart'
 **/
 const FxSummaryView = (props: FxSummaryViewProps) => {
 
-    const transactions = useStaticQuery(graphql`{
-        allFxTransactionsData {
-            nodes {
-                items {
-                    date
-                    buysell
-                    price
-                    total_pl
-                }
-            }
-        }
-    }`)
+    const transactions: FxTransactionsData = props.data;
     const summaries = formatFxDailySummary(props.month, transactions);
     
     if (summaries === null) {

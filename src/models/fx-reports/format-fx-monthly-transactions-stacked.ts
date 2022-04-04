@@ -3,10 +3,10 @@ import {
     FxMonthlyTransactionsResponse, 
     FxMonthlyTransactionsDataEntry, 
     FxMonthlyTransactionsProfitKey,
-    FxTransactionDataRecord
+    FxTransactionsDataRecord
 } from '../../types';
-import getOpenInterestRecord from './getOpenInterestRecord';
-import getSettlementOrderRecords from './getSettlementOrderRecords';
+import getOpenInterestRecord from './get-open-interest-record';
+import getSettlementOrderRecords from './get-settlement-order-records';
 const _ = require('lodash');
 
 /**
@@ -41,17 +41,17 @@ export default function formatFxMonthlyTransactionsStacked(data:FxTransactionsDa
 
         buffer.push(item);
         if (item.buysell == '新規売' || item.buysell == '新規買') {
-            const openInterestRecord: FxTransactionDataRecord|null = getOpenInterestRecord(buffer);
+            const openInterestRecord: FxTransactionsDataRecord|null = getOpenInterestRecord(buffer);
             if (openInterestRecord != null) {
 
-                const settlementOrderRecords: FxTransactionDataRecord[] 
+                const settlementOrderRecords: FxTransactionsDataRecord[] 
                     = getSettlementOrderRecords(buffer).filter( (record) => {
                         const date = record.date.split(' ')[0];
                         return date.startsWith(year);
                 });
                 if (settlementOrderRecords.length != 0) {
 
-                    const contexts = settlementOrderRecords.map( (record: FxTransactionDataRecord) => {
+                    const contexts = settlementOrderRecords.map( (record: FxTransactionsDataRecord) => {
                         const date = record.date.split(' ')[0];
                         const month = date.substring(5, 7);
                         const sign: number = openInterestRecord.buysell == '新規買' ? 1 : -1;

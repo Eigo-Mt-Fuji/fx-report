@@ -1,5 +1,5 @@
-import calculateFxLot from './calculateFxLot';
-import formatFxProfitLossYen from './formatFxProfitLossYen';
+import calculateFxLot from './calculate-fx-lot';
+import formatFxProfitLossYen from './format-fx-profit-loss-yen';
 
 /**
  * calculateFxLotEstimate
@@ -10,7 +10,7 @@ import formatFxProfitLossYen from './formatFxProfitLossYen';
  * @param {*} leverage レバレッジ(25)
  * @param {*} allowedDepositRate (許容 預託保証金率(%)) 120
  */
-export default function calculateFxLotEstimate(rate, currentState, budget, tradeUnit, leverage, allowedDepositRate) {
+export default function calculateFxLotEstimate(rate: number, currentState: any, budget: number, tradeUnit: number, leverage: number, allowedDepositRate: number) : any[] {
     // 最大ロット数を計算
     const maxTradableLotCount = calculateFxLot(budget + currentState.deposit + currentState.valuationGainLoss - currentState.requiredDeposit, rate, tradeUnit, leverage);
 
@@ -26,7 +26,7 @@ export default function calculateFxLotEstimate(rate, currentState, budget, trade
                 sell: currentState.sellPosition + i,
                 buy: currentState.buyPosition + i
             },
-            additionalRequiredDeposit: formatFxProfitLossYen(additionalRequiredDeposit),
+            additionalRequiredDeposit: formatFxProfitLossYen(`${additionalRequiredDeposit}`),
             estimateRate,
             isAllowed: allowedDepositRate <= estimateRate ? true : false
         })

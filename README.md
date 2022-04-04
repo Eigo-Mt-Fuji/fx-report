@@ -27,11 +27,11 @@ graph TD
 
 - このように月次の取引成績とコメントがグラフで出ます。
 
-![img](./img/thumbnail-yearly.png)
+![img](./src/images/thumbnail-yearly.png)
 
-![img](./img/thumbnail-monthly.png)
+![img](./src/images/thumbnail-monthly.png)
 
-![img](./img/thumbnail-daily.png)
+![img](./src/images/thumbnail-daily.png)
 
 ## システム構成
 
@@ -43,7 +43,7 @@ graph TD
 
 * Frontend
   * NodeJs>=15
-  * Gatsby, React Bootstrap, Rechart, Mapbox
+  * [Next.js](https://nextjs.org/), React Bootstrap, Rechart, Mapbox
 
 * Backend
   * Netlify : https://app.netlify.com/sites/goofy-bohr-20d740/overview

@@ -2,12 +2,12 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 
-import formatFxProfitLossYen from '../../models/fx-reports/formatFxProfitLossYen';
+import formatFxProfitLossYen from '../../models/fx-reports/format-fx-profit-loss-yen';
 import {FxTransactionsTableProps} from '../../types';
 
 const FxTransactionsTable: (props: FxTransactionsTableProps) => any = (props: FxTransactionsTableProps) => {
 
-    const renderRow = (d) => {
+    const renderRow = (d: any) => {
         
         return (
             <Row key={d.name}>

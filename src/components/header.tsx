@@ -1,10 +1,15 @@
-import { Link } from 'gatsby'
+// TODO: how to customize https://nextjs.org/docs/api-reference/next/link
+import Link from 'next/link'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 import {Nav} from 'react-bootstrap';
 
-const Header = ({ siteTitle }) => (
+interface HeaderProps { 
+  siteTitle: string;
+  children: any;
+}
+const Header = ({ siteTitle, children }: HeaderProps) => (
   <>
 
       <header
@@ -21,13 +26,7 @@ const Header = ({ siteTitle }) => (
           }}
         >
           <h1 style={{ margin: 0 }}>
-            <Link
-              to="/"
-              style={{
-                color: 'white',
-                textDecoration: 'none',
-              }}
-            >
+            <Link href="/">
               {siteTitle}
             </Link>
           </h1>
