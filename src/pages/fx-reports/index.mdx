@@ -1,10 +1,4 @@
-
----
-title: FX投機 ほうれんそう。ジャリンジャリン稼ぐぜ!
-path: /fx-reports
-date: 2022-03-28
----
-
+import Layout from '../../components/layout'
 import FxImage20210130 from "../../components/image";
 import FxMonthlyReport from "../../components/fx-reports/fx-monthly-report";
 import FxAnnualReport from "../../components/fx-reports/fx-annual-report";
@@ -12,12 +6,21 @@ import FxReviewImage20210203 from "../../components/fx-reports/fx-review-image20
 import FxPriceLotCheetSheet from "../../components/fx-reports/fx-price-lot-cheetsheet";
 import FxSummaryView from "../../components/fx-reports/fx-summary-view";
 import loadFxTransactionsAll from "../../models/fx-reports/fx-transaction-csv-loader";
+import moment from 'moment';
+
+export const meta = {
+  author: 'EikichiEngineer',
+  title: 'FX投機 ジャリンジャリン稼ぐぜ!',
+  date: moment().format('YYYY-MM-DD'),
+  description: '経営管理特設サイト ジャリンジャリン稼ぐぜ',
+}
 
 export async function getStaticProps({ params }) {
   const data = await loadFxTransactionsAll();
 
   return { props: { data: data } };
 }
+export default  ({ children }) => <Layout meta={meta}>{children}</Layout>
 
 ## ABOUT
 
@@ -182,9 +185,6 @@ export async function getStaticProps({ params }) {
               * 70ロットを持ち続けたまま3年経過すると
                  * 3年で300万(10ロットあたり46万)
                  * 10ロットずつタイミングを見て損切りしていく考えは必要
-                    ![img](./fx-swap-simulation-70lot.png)
-                    ![img](./fx-swap-simulation-60lot.png)
-                    ![img](./fx-swap-simulation-10lot.png)
 
 * 米国債長期金利とドル円高騰の関係の最新状況確認
   * こちらを参照: https://www.rakuten-sec.co.jp/web/market/data/us10yt.html

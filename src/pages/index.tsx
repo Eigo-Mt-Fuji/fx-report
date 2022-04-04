@@ -11,6 +11,7 @@ import { GaEvent } from '../types';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/Home.module.css'
+import moment from 'moment';
 
 const Home: NextPage = () => {
 
@@ -40,7 +41,12 @@ const Home: NextPage = () => {
   //   run('d-block');
   // }); 
   return (
-    <Layout>
+    <Layout meta={{
+      author: 'EikichiEngineer',
+      title: '経営管理特設サイト ジャリンジャリン稼ぐぜ',
+      date: moment().format('YYYY-MM-DD'),
+      description: '経営管理特設サイト ジャリンジャリン稼ぐぜ'
+    }}>
       <div className={styles.container}>
         <h1>サイトマップ</h1>
         <Container>

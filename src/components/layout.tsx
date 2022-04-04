@@ -2,15 +2,22 @@ import React from 'react'
 import SEO from './seo';
 import Header from './header'
 
+interface LayoutMetaData {
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+}
 interface LayoutProps {
 
   children: any;
+  meta: LayoutMetaData;
 }
-const Layout = ({ children } : LayoutProps) => {
+const Layout = ({ children, meta } : LayoutProps) => {
 
   return (
     <>
-      <Header siteTitle='Title'>
+      <Header siteTitle={meta.title}>
       </Header>
       <div
         style={{
@@ -21,7 +28,7 @@ const Layout = ({ children } : LayoutProps) => {
         }}
       >
         <main>
-          <SEO  title='portfolio-2021' description='経営管理特設サイト ジャリンジャリン稼ぐぜ' />
+          <SEO  title={meta.title} description={meta.description} />
           {children}
         </main>
         <footer
@@ -29,7 +36,7 @@ const Layout = ({ children } : LayoutProps) => {
             marginTop: '2rem',
           }}
         >
-          © {new Date().getFullYear()},fujio
+          © {meta.date},{meta.author}
         </footer>
       </div>
     </>
