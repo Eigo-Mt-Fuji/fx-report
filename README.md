@@ -55,7 +55,7 @@ graph TD
   * Python
       * [validate-fx-buysell-order](./scripts/validate-fx-buysell-order.py)
         * push時にgithub上で実行・エラーを検知
-      * [sbi-csv-police](./scripts/sbi-csv-police.py)
+      * [sbi-csv-police](https://github.com/Eigo-Mt-Fuji/fx-report/blob/master/scripts/transform-sbi-csv.py)
         * SBIのFX取引明細をサイトに反映する作業の自動化
            * https://github.com/Eigo-Mt-Fuji/fx-report/issues/5
             * downloads/sbi/ディレクトリにCSVファイルをpushする
