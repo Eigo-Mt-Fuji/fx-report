@@ -15,7 +15,7 @@ import moment from 'moment';
 // import JavaScript modules dynamically and work with them. They also work with SSR. only load the module dynamically in the browser 
 // after the user types in the search input https://nextjs.org/docs/advanced-features/dynamic-import
 import dynamic from 'next/dynamic'
-const Holder = dynamic(() => import('react-holder'),   { ssr: false })
+const Holder = dynamic(() => import('react-holder'))
 
 const Home: NextPage = () => {
 
