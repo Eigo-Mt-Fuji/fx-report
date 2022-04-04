@@ -1,9 +1,8 @@
 import { NextPage } from 'next';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 
 const _ = require('lodash');
-// const {run} = require('holderjs/holder');
 
 import Layout from '../components/layout';
 import * as gtag from '../components/gtag'
@@ -12,6 +11,11 @@ import { GaEvent } from '../types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '../styles/Home.module.css'
 import moment from 'moment';
+// import Holder from 'react-holder';
+// import JavaScript modules dynamically and work with them. They also work with SSR. only load the module dynamically in the browser 
+// after the user types in the search input https://nextjs.org/docs/advanced-features/dynamic-import
+import dynamic from 'next/dynamic'
+const Holder = dynamic(() => import('react-holder'),   { ssr: false })
 
 const Home: NextPage = () => {
 
@@ -36,10 +40,6 @@ const Home: NextPage = () => {
 
       }
      };
-  // useEffect( () => {
-
-  //   run('d-block');
-  // }); 
   return (
     <Layout meta={{
       author: 'EikichiEngineer',
@@ -64,6 +64,7 @@ const Home: NextPage = () => {
             </Row>
         </Container>
         <form onSubmit={handleSubmit}>
+          <Holder width="100%" height="200px" updateOnResize={true} className={'my-custom-class'} />
           <button type="submit">submit</button>
         </form>
       </div>
