@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import { FxMonthlyTransactionsProfitKey, FxMonthlyTransactionsDataEntry, FxAnnualStackedBarChartProps } from '../../types';
-import formatFxProfitTickLabel from '../../models/fx-reports/formatFxProfitTickLabel';
+import formatFxProfitTickLabel from '../../models/fx-reports/format-fx-profit-tick-label';
 
 import FxProfitLossLabel from './fx-profit-loss-label';
 

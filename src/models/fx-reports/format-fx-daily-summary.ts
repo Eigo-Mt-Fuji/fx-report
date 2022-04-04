@@ -1,8 +1,8 @@
 import {FxDailySummaryContext,FxTransactionsDataRecord,FxTransactionsData, FxDailySummaryContextData} from '../../types'
 import moment from 'moment';
-import formatFxDurationMap from './formatFxDurationMap';
-import getOpenInterestRecord from './getOpenInterestRecord';
-import getSettlementOrderRecords from './getSettlementOrderRecords';
+import formatFxDurationMap from './format-fx-duration-map';
+import getOpenInterestRecord from './get-open-interest-record';
+import getSettlementOrderRecords from './get-settlement-order-records';
 
 export default function formatFxDailySummary(month: string, data: FxTransactionsData) : FxDailySummaryContext[]|null {
 

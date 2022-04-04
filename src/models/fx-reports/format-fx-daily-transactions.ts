@@ -2,9 +2,9 @@ import moment from 'moment';
 import { FxTransactionsData, FxTransactionsDataRecord } from '../../types';
 const _ = require('lodash');
 
-import getOpenInterestRecord from './getOpenInterestRecord';
+import getOpenInterestRecord from './get-open-interest-record';
 
-import getSettlementOrderRecords from './getSettlementOrderRecords';
+import getSettlementOrderRecords from './get-settlement-order-records';
 
 /**
  * 決済売買の日付を元に日毎の取引実績を集計する

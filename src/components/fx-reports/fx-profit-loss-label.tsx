@@ -1,5 +1,5 @@
 import React from 'react';
-import formatFxProfitLossYen from '../../models/fx-reports/formatFxProfitLossYen';
+import formatFxProfitLossYen from '../../models/fx-reports/format-fx-profit-loss-yen';
 import {FxProfitLossLabelProps} from '../../types';
 
 const FxProfitLossLabel = (props: any) => {

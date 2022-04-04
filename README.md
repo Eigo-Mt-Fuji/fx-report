@@ -27,11 +27,11 @@ graph TD
 
 - このように月次の取引成績とコメントがグラフで出ます。
 
-![img](./img/thumbnail-yearly.png)
+![img](./src/images/thumbnail-yearly.png)
 
-![img](./img/thumbnail-monthly.png)
+![img](./src/images/thumbnail-monthly.png)
 
-![img](./img/thumbnail-daily.png)
+![img](./src/images/thumbnail-daily.png)
 
 ## システム構成
 

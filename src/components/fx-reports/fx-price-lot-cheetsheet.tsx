@@ -4,9 +4,9 @@ import { Container, Row, Col, Alert } from 'react-bootstrap';
 import { request } from 'graphql-request';
 import moment from 'moment';
 
-import exchangeRatesApi from '../../models/fx-reports/exchangeRatesApi';
-import calculateFxLotEstimate from '../../models/fx-reports/calculateFxLotEstimate';
-import formatFxProfitLossYen from '../../models/fx-reports/formatFxProfitLossYen';
+import exchangeRatesApi from '../../models/fx-reports/exchange-rates-api';
+import calculateFxLotEstimate from '../../models/fx-reports/calculate-fx-lot-estimate';
+import formatFxProfitLossYen from '../../models/fx-reports/format-fx-profit-loss-yen';
 import FxPriceLot from './fx-price-lot';
 import FxCurrentStateForm from './fx-current-state-form';
 
