@@ -5,7 +5,8 @@ const ResourceName = () => {
     const { resource }: any = useResourceContext();
     return <>{resource}</>;
 }
-
+// Data Providers methods must return a Promise for an object with a data property.
+// https://marmelab.com/react-admin/DataProviders.html#response-format
 const FxAnalysisList = (props: any) => (
     <List {...props}>
         <>
