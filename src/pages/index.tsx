@@ -67,7 +67,7 @@ const Home: NextPage = () => {
                     <Card.Header>なんちゃってFX分析</Card.Header>
                     <Card.Body>
                       <Card.Text>分析するぜ</Card.Text>
-                      <Button variant="primary" href="/admin/index">Open</Button>
+                      <Button variant="primary" href="/admin">Open</Button>
                     </Card.Body>
                   </Card>
                 </Col>
