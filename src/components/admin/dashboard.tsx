@@ -62,7 +62,7 @@ const Dashboard = (_props: any) => {
     }, [dataProvider]);
     useEffect(() => {
         fetchFxAnalysis();
-    }, [version]);
+    }, [version, fetchFxAnalysis]);
     const {
         analysis,
     } = state;
