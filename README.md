@@ -33,37 +33,10 @@ graph TD
 
 ![img](./src/images/thumbnail-daily.png)
 
-## システム構成
+## システム構成・設計
 
-* ![img](./docs/architecture.png)
-
-* ![img](./docs/program-architecture.png)
-
-## 技術スタック
-
-* Frontend
-  * NodeJs>=15
-  * [Next.js](https://nextjs.org/), React Bootstrap, Rechart, Mapbox
-
-* Backend
-  * Netlify : https://app.netlify.com/sites/goofy-bohr-20d740/overview
-  * GraphCMS : https://app.graphcms.com/a83c9f9e7dae4541a8c6e1ac08a9495f/master/settings/project
-  * AWS : https://console.aws.amazon.com/route53/v2/hostedzones#ListRecordSets/Z08256261BDETXBUSKFLN
-  * Github Workflow(CI) : https://github.com/Eigo-Mt-Fuji/fx-report/tree/master/.github/workflows
-
-* Tool
-  * Python
-      * [validate-fx-buysell-order](./scripts/validate-fx-buysell-order.py)
-        * push時にgithub上で実行・エラーを検知
-      * [sbi-csv-police](https://github.com/Eigo-Mt-Fuji/fx-report/blob/master/scripts/transform-sbi-csv.py)
-        * SBIのFX取引明細をサイトに反映する作業の自動化
-           * https://github.com/Eigo-Mt-Fuji/fx-report/issues/5
-            * downloads/sbi/ディレクトリにCSVファイルをpushする
-            * github workflow上でCSV変換処理が自動実行される
-            * (workflowが正常終了した場合)変換後のCSVファイルを反映するPRが生成される
-  * Analytics
-     * Gtag https://analytics.google.com/analytics/web/?authuser=0#/a221044200p304415269/admin/streams/table/
-     * Optimize Container https://optimize.google.com/optimize/home/#/accounts/4704735488/containers/15058710
+- wikiを参照
+  - https://github.com/Eigo-Mt-Fuji/fx-report/wiki
 
 ## 備考
 
