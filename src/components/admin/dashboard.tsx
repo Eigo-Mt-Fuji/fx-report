@@ -39,7 +39,7 @@ const Spacer = () => <span style={{ width: '1em' }} />;
 
 const ResourceName = () => {
     // to read the current resource name
-    const { resource } = useResourceContext();
+    const { resource } : any = useResourceContext();
     return <>{resource}</>
 };
 
@@ -62,7 +62,7 @@ const Dashboard = (_props: any) => {
     }, [dataProvider]);
     useEffect(() => {
         fetchFxAnalysis();
-    }, [version]);
+    }, [version, fetchFxAnalysis]);
     const {
         analysis,
     } = state;
