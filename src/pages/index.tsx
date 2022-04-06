@@ -60,7 +60,17 @@ const Home: NextPage = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-              
+            </Row>
+            <Row key="sitemapRow">
+                <Col sm="auto">
+                  <Card style={{ width: '18rem' }}>
+                    <Card.Header>なんちゃってFX分析</Card.Header>
+                    <Card.Body>
+                      <Card.Text>分析するぜ</Card.Text>
+                      <Button variant="primary" href="/admin/index">Open</Button>
+                    </Card.Body>
+                  </Card>
+                </Col>
             </Row>
         </Container>
         <form onSubmit={handleSubmit}>
