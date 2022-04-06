@@ -1,15 +1,15 @@
 import * as React from "react";
-import { Admin, Resource, ListGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import Dashboard from "./fx-analysis/dashboard";
+import FxAnalysisList from "./fx-analysis/list";
 
-// TODO: jsonServerProviderわからない
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com');
+const dataProvider = jsonServerProvider(process.env.NEXT_PUBLIC_FX_ANALYSIS_BACKEND_API_ENDPOINT);
 
-// TODO: AdminコンポーネントとResourceコンポーネントわからない
 const App = () => (
-  <Admin dataProvider={dataProvider}>
-    <Resource name="users" list={ListGuesser} />
-    <Resource name="posts" list={ListGuesser} />
+  <Admin dataProvider={dataProvider} dashboard={Dashboard}>
+    <Resource name="fx-analysis" list={FxAnalysisList} icon={AttachMoneyIcon} />
   </Admin>
 );
 
