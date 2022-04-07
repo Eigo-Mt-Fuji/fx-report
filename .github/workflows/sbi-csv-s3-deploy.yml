@@ -1,0 +1,30 @@
+name: Upload SBI csv to AWS S3
+on:
+  push:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      # https://github.blog/changelog/2022-01-13-github-actions-update-on-oidc-based-deployments-to-aws/
+      # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect
+      # https://github.com/aws-actions/configure-aws-credentials
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::047980477351:role/prdFxReportGithubWorkflow
+          aws-region: ap-northeast-1
+      # https://docs.aws.amazon.com/cli/latest/reference/sts/get-caller-identity.html
+      - name: AWS STS  Get Caller Identity
+        run: aws sts get-caller-identity
+
+      # https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html
+      - name: Upload s3 dryrun
+        run: aws s3 sync --dryrun src/data/fx_transactions/ s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
+
+      - name: Upload s3
+        run: aws s3 sync src/data/fx_transactions/ s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
+        # https://github.community/t/trigger-workflow-only-on-pull-request-merge/17359/4
+        if: github.event.pull_request.merged == 'true'

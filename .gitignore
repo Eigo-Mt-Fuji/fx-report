@@ -38,3 +38,7 @@ yarn-error.log*
 /public
 scripts/*.csv
 __pycache__
+
+# terraform
+/terraform/components/**/.terraform
+/terraform/components/**/*.plan
