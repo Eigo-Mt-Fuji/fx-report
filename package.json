@@ -69,6 +69,7 @@
     "@types/react-dom": "17.0.14",
     "@types/react-helmet": "^6.1.0",
     "@types/react-holder": "^1.0.34",
+    "@types/react-router-dom":"^5.1.0",
     "@types/recharts": "1.8.9",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
     "@typescript-eslint/parser": "^4.19.0",
