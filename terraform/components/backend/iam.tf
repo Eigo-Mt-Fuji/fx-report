@@ -5,7 +5,10 @@ resource "aws_iam_role" "this" {
     # https://dev.classmethod.jp/articles/create-iam-id-provider-for-github-actions-with-management-console/
     assume_role_policy = templatefile("${path.module}/templates/github-workflow-assume-role-policy.json", {
         federated_provider_id = aws_iam_openid_connect_provider.this.id
-        repo_sub = "repo:${var.repository_name}:*"
+        oidc_provider = "token.actions.githubusercontent.com"
+        oidc_claim = "sub"
+        allowed_repo = var.repository_name
+        allowed_refs = "*"
     })
 
     tags = local.tags
@@ -37,7 +40,9 @@ resource "aws_iam_policy" "this_sts" {
   name        = "${terraform.workspace}FxReportGithubWorkflowPolicy"
   description = "${terraform.workspace}FxReportGithubWorkflowPolicy"
 
-  policy = file("${path.module}/templates/github-workflow-iam-policy.json")
+  policy = templatefile("${path.module}/templates/github-workflow-iam-policy.json", {
+      bucket_name = aws_s3_bucket.this.bucket
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "this_sts_attach" {

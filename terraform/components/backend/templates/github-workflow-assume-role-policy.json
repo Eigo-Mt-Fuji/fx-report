@@ -9,7 +9,7 @@
             },
             "Condition": {
                 "StringLike": {
-                    "token.actions.githubusercontent.com:sub": "${repo_sub}"
+                    "${oidc_provider}:${oidc_claim}": "repo:${allowed_repo}:${allowed_refs}"
                 }
             }
         }
