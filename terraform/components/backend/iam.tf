@@ -2,7 +2,7 @@ resource "aws_iam_role" "this" {
     provider = aws.efgriver_global_devops
 
     name = "${terraform.workspace}FxReportGithubWorkflow"
-
+    # https://dev.classmethod.jp/articles/create-iam-id-provider-for-github-actions-with-management-console/
     assume_role_policy = templatefile("${path.module}/templates/github-workflow-assume-role-policy.json", {
         federated_provider_id = aws_iam_openid_connect_provider.this.id
         repo_sub = "repo:${var.repository_name}:*"

@@ -10,7 +10,9 @@ jobs:
       contents: read
     steps:
       - run: sleep 5 # there's still a race condition for now
-
+      # 
+      # https://github.blog/changelog/2022-01-13-github-actions-update-on-oidc-based-deployments-to-aws/
+      # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect
       - name: Configure AWS
         run: |
           export AWS_ROLE_ARN=arn:aws:iam::047980477351:role/prdFxReportGithubWorkflow
@@ -24,14 +26,15 @@ jobs:
           export ID_TOKEN=$(curl -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sigstore" | jq -r '.value')
           echo $ID_TOKEN
           echo $ID_TOKEN > $AWS_WEB_IDENTITY_TOKEN_FILE
-      - name: dump
-        run: cat $AWS_WEB_IDENTITY_TOKEN_FILE
+      # https://docs.aws.amazon.com/cli/latest/reference/sts/get-caller-identity.html
       - name: AWS STS  Get Caller Identity
         run: aws sts get-caller-identity
 
+      # https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html
       - name: Upload s3 dryrun
-        run: aws s3 sync --dryrun src/data/fx_transactions/*.csv s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
+        run: aws s3 sync --dryrun src/data/fx_transactions/ s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
 
       - name: Upload s3
-        run: aws s3 sync src/data/fx_transactions/*.csv s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
+        run: aws s3 sync src/data/fx_transactions/ s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
+        # https://github.community/t/trigger-workflow-only-on-pull-request-merge/17359/4
         if: github.event.pull_request.merged == 'true'
