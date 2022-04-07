@@ -9,7 +9,7 @@
             },
             "Condition": {
                 "StringLike": {
-                    "vstoken.actions.githubusercontent.com:sub": "${repo_sub}"
+                    "token.actions.githubusercontent.com:sub": "${repo_sub}"
                 }
             }
         }
