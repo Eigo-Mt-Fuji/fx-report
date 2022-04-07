@@ -1,3 +1,3 @@
 variable "repository_name" {
-    default = "Eigo-Mt-Fuij/fx-report"
+    default = "Eigo-Mt-Fuji/fx-report"               
 }
