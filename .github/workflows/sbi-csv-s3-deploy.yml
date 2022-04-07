@@ -1,9 +1,14 @@
 name: Upload SBI csv to AWS S3
 on:
   pull_request:
+    branches:
+      - main
+    types: [closed]
 jobs:
   build:
     runs-on: ubuntu-latest
+    # https://github.community/t/trigger-workflow-only-on-pull-request-merge/17359/4
+    if: github.event.pull_request.merged == true
     permissions:
       id-token: write
       contents: read
@@ -26,5 +31,4 @@ jobs:
 
       - name: Upload s3
         run: aws s3 sync src/data/fx_transactions/ s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
-        # https://github.community/t/trigger-workflow-only-on-pull-request-merge/17359/4
         if: github.event.pull_request.merged == 'true'
