@@ -1,6 +1,5 @@
 name: Validate fx_transactions kessaidata
 on:
-  push:
   pull_request:
 jobs:
   validate-data:

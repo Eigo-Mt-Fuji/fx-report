@@ -1,6 +1,6 @@
 name: Upload SBI csv to AWS S3
 on:
-  push:
+  pull_request:
 jobs:
   build:
     runs-on: ubuntu-latest
