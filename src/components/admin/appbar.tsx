@@ -3,7 +3,8 @@ import { AppBar } from 'react-admin';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Logo from './Logo';
+// https://scriptverse.academy/tutorials/reactjs-material-ui-icons.html
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
 const useStyles = makeStyles({
     title: {
@@ -27,7 +28,7 @@ const MyAppBar = props => {
                 className={classes.title}
                 id="react-admin-title"
             />
-            <Logo />
+            <AttachMoneyIcon />
             <span className={classes.spacer} />
         </AppBar>
     );
