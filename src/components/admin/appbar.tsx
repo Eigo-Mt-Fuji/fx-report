@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-const MyAppBar = props => {
+const MyAppBar = (props : any) => {
     const classes = useStyles();
     return (
         <AppBar {...props}>
