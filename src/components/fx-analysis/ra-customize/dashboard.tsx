@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, CSSProperties } from 'react';
 import { Record, useDataProvider, useVersion, Datagrid, DateField, TextField, List, useResourceContext } from 'react-admin';
-import FxAnalysisWeekHourChart from './fx-analysis-week-hour-chart';
-import FxAnalysisWeekHourTable from './fx-analysis-week-hour-table';
+import FxAnalysisWeekHourChart from '../ra-resources/fx-analysis-week-hour-chart';
+import FxAnalysisWeekHourTable from '../ra-resources/fx-analysis-week-hour-table';
 
 // media queryを使って レスポンシブレイアウト
 // https://github.com/marmelab/react-admin/blob/master/examples/demo/src/dashboard/Dashboard.tsx
@@ -12,7 +12,6 @@ interface State {
     analysis?: any;
 }
 interface FxRecord extends Record {
-    id: string;
     order_no: string;
     date: string;
     lot_number: string;
@@ -43,7 +42,7 @@ const ResourceName = () => {
     return <>{resource}</>
 };
 
-const Dashboard = (_props: any) => {
+const MyDashboard = (_props: any) => {
     const [state, setState] = useState<State>({});
 
     const dataProvider = useDataProvider();
@@ -79,4 +78,4 @@ const Dashboard = (_props: any) => {
     )    
 }
 
-export default Dashboard;
+export default MyDashboard;
