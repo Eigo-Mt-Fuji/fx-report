@@ -1,0 +1,37 @@
+--
+name: Upload SBI csv to AWS S3
+
+on: 
+  pull_request:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - run: sleep 5 # there's still a race condition for now
+
+      - name: Configure AWS
+        run: |
+          export AWS_ROLE_ARN=arn:aws:iam::047980477351:role/prdFxReportGithubWorkflow
+          export AWS_WEB_IDENTITY_TOKEN_FILE=/tmp/awscreds
+          export AWS_DEFAULT_REGION=us-east-1
+
+          echo AWS_WEB_IDENTITY_TOKEN_FILE=$AWS_WEB_IDENTITY_TOKEN_FILE >> $GITHUB_ENV
+          echo AWS_ROLE_ARN=$AWS_ROLE_ARN >> $GITHUB_ENV
+          echo AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION >> $GITHUB_ENV
+
+          curl -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sigstore" | jq -r '.value' > $AWS_WEB_IDENTITY_TOKEN_FILE
+
+      - name: AWS STS  Get Caller Identity
+        run: aws sts get-caller-identity
+
+      - name: Upload s3 dryrun
+        run: aws s3 sync --dryrun src/data/fx_transactions/*.csv s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
+
+      - name: Upload s3
+        run: aws s3 sync src/data/fx_transactions/*.csv s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
+        if: github.event.pull_request.merged == 'true'
