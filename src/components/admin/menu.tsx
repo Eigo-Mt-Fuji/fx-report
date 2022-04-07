@@ -7,12 +7,12 @@ import { withRouter } from 'react-router-dom';
 import LabelIcon from '@material-ui/icons/Label';
 
 const Menu: any = ({ onMenuClick, logout }:any) => {
-    const isXSmall = useMediaQuery(theme => theme.breakpoints.down('xs'));
-    const open = useSelector(state => state.admin.ui.sidebarOpen);
-    const resources = useSelector(getResources);
+    const isXSmall = useMediaQuery((theme:any) => theme.breakpoints.down('xs'));
+    const open = useSelector((state:any) => state.admin.ui.sidebarOpen);
+    const resources:any[] = useSelector(getResources);
     return (
         <div>
-            {resources.map(resource => (
+            {resources.map((resource:any) => (
                 <MenuItemLink
                     key={resource.name}
                     to={`/${resource.name}`}
