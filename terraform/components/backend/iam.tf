@@ -20,7 +20,7 @@ resource "aws_iam_role_policy_attachment" "this_attach" {
 resource "aws_iam_openid_connect_provider" "this" {
     provider = aws.efgriver_global_devops
     
-    url = "https://vstoken.actions.githubusercontent.com"
+    url = "https://token.actions.githubusercontent.com"
 
     client_id_list = [
         "sigstore",
