@@ -26,9 +26,5 @@ jobs:
         run: aws sts get-caller-identity
 
       # https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html
-      - name: Upload s3 dryrun
-        run: aws s3 sync --dryrun src/data/fx_transactions/ s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
-
       - name: Upload s3
         run: aws s3 sync src/data/fx_transactions/ s3://fx-report-data.prd.efgriver.com/src/data/fx_transactions/
-        if: github.event.pull_request.merged == 'true'
