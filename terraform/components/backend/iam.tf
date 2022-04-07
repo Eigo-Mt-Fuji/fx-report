@@ -27,6 +27,8 @@ resource "aws_iam_openid_connect_provider" "this" {
 
     client_id_list = [
         "sigstore",
+        "sts.amazonaws.com",
+        "https://github.com/Eigo-Mt-Fuji"
     ]
 
     thumbprint_list = [
