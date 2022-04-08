@@ -70,7 +70,8 @@ const MyDashboard = (_props: any) => {
             <div style={styles.leftCol}>
                 <div style={styles.flex}>
                     <FxAnalysisWeekHourChart data={analysis} />
-                    <Spacer />
+                </div>
+                <div>
                     <FxAnalysisWeekHourTable data={analysis} />
                 </div>
             </div>

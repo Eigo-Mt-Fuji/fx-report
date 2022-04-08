@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Admin, Resource } from 'react-admin';
 import jsonServerProvider from 'ra-data-json-server';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import MyDashboard from "./ra-customize/dashboard";
 import FxAnalysisList from "./ra-resources/fx-analysis-list";
 import MyLayout from './ra-customize/layout';
