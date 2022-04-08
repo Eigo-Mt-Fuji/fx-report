@@ -1,9 +1,254 @@
-const FxAnalysisWeekHourTable = (props: any) => {
 
-    return (
-        <div>
-            FxAnalysisWeekHourTable
-        </div>        
-    )
+import * as React from 'react';
+import clsx from 'clsx';
+import { withStyles, WithStyles, Theme, createTheme } from '@material-ui/core/styles';
+import TableCell from '@material-ui/core/TableCell';
+import Paper from '@material-ui/core/Paper';
+import {
+  AutoSizer,
+  Column,
+  Table,
+  TableCellRenderer,
+  TableHeaderProps
+} from 'react-virtualized';
+
+interface Data {
+    calories: number;
+    carbs: number;
+    dessert: string;
+    fat: number;
+    id: number;
+    protein: number;
 }
-export default FxAnalysisWeekHourTable;
+interface ColumnData {
+    dataKey: string;
+    label: string;
+    numeric?: boolean;
+    width: number;
+}
+  
+interface Row {
+    index: number;
+}
+interface MuiVirtualizedTableProps extends WithStyles<typeof styles> {
+    columns: readonly ColumnData[];
+    headerHeight?: number;
+    onRowClick?: () => void;
+    rowCount: number;
+    rowGetter: (row: Row) => Data;
+    rowHeight?: number;
+}
+// TODO: 明度を調整するにはhsl値を使うのがgood
+// https://www.w3schools.com/colors/colors_picker.asp
+// https://htmlcss.jp/css/background-color.html
+const styles = (theme: Theme) => ({
+    flexContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      boxSizing: 'border-box',
+    },
+    table: {
+      '& .ReactVirtualized__Table__headerRow': {
+        ...(theme.direction === 'rtl' && {
+          paddingLeft: '0 !important',
+        }),
+        ...(theme.direction !== 'rtl' && {
+          paddingRight: undefined,
+        }),
+      },
+    },
+    tableRow: {
+      cursor: 'pointer',
+    },
+    tableRowHover: {
+      '&:hover': {
+        backgroundColor: theme.palette.grey[200],
+      },
+    },
+    tableCell: {
+      flex: 1,
+    },
+    noClick: {
+      cursor: 'initial',
+    },
+    hoge: {
+      flex: 1,
+      backgroundColor: 'hsl(120, 100%, 95%)'
+    },
+} as const);
+
+const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
+
+    console.log(props)
+    const getRowClassName = ({ index }: Row) => {
+        const { classes, onRowClick } = props;
+        return clsx(classes.tableRow, classes.flexContainer, {
+          [classes.tableRowHover]: index !== -1 && onRowClick != null,
+        });
+    };
+    
+    const cellRenderer: TableCellRenderer = ({ cellData, columnIndex }) => {
+        const { columns, classes, rowHeight, onRowClick } = props;
+        
+        const className = clsx(classes['hoge'], classes.flexContainer, {
+            [classes.noClick]: onRowClick == null,
+        });
+        // MuiVirtualizedTable-tableCell-49 MuiVirtualizedTable-flexContainer-45 MuiVirtualizedTable-noClick-50
+        if (columnIndex == 1) {
+            console.log(className);
+            // console.log(`${classes['hoge']}`);
+            // if (cellData >= 100) {
+            //     console.log(`cellRenderer: ${columnIndex} ${classes.tableCell} ${cellData}`);
+            //     console.log(`${classes.flexContainer}`);
+            // }
+        }
+        return (
+          <TableCell
+            component="div"
+            className={className}
+            variant="body"
+            style={{ height: rowHeight }}
+            align={
+              (columnIndex != null && columns[columnIndex].numeric) || false
+                ? 'right'
+                : 'left'
+            }
+          >
+            {cellData}
+          </TableCell>
+        );
+    };
+    
+    const headerRenderer = ({label, columnIndex}: TableHeaderProps & { columnIndex: number }) => {
+
+        const { headerHeight, columns, classes } = props;
+
+        return (
+          <TableCell
+            component="div"
+            className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
+            variant="head"
+            style={{ height: headerHeight }}
+            align={columns[columnIndex].numeric || false ? 'right' : 'left'}
+          >
+            <span>{label}</span>
+          </TableCell>
+        );
+    };
+ 
+    const { classes, columns, rowHeight, headerHeight, ...tableProps } = props;
+    console.log(rowHeight);
+    return (
+        <AutoSizer>
+        {({ height, width }) => (
+            <Table
+            height={height}
+            width={width}
+            gridStyle={{
+                direction: 'inherit',
+            }}
+            rowHeight={rowHeight!}
+            headerHeight={headerHeight!}
+            className={classes.table}
+            {...tableProps}
+            rowClassName={getRowClassName}
+            >
+            {columns.map(({ dataKey, ...other }, index) => {
+                return (
+                <Column
+                    key={dataKey}
+                    headerRenderer={(headerProps) =>
+                    headerRenderer({
+                        ...headerProps,
+                        columnIndex: index,
+                    })
+                    }
+                    className={classes.flexContainer}
+                    cellRenderer={cellRenderer}
+                    dataKey={dataKey}
+                    {...other}
+                />
+                );
+            })}
+            </Table>
+        )}
+        </AutoSizer>
+    );
+}
+
+const defaultTheme = createTheme();
+const StyledMuiVirtualizedTable = withStyles(styles, { defaultTheme })(MuiVirtualizedTable);
+  
+export default function FxAnalysisWeekHourTable({data}: any) {
+
+    // TODO: この部分を取引実績データから算出した曜日別・時間帯別の配列で置き換え
+    type Sample = [string, number, number, number, number];
+    const sample: readonly Sample[] = [
+        ['Frozen yoghurt', 159, 6.0, 24, 4.0],
+        ['Ice cream sandwich', 237, 9.0, 37, 4.3],
+        ['Eclair', 262, 16.0, 24, 6.0],
+        ['Cupcake', 305, 3.7, 67, 4.3],
+        ['Gingerbread', 356, 16.0, 49, 3.9],
+    ];
+    const sampleColumns = [
+        {
+          width: 200,
+          label: 'Dessert',
+          dataKey: 'dessert',
+        },
+        {
+          width: 120,
+          label: 'Calories\u00A0(g)',
+          dataKey: 'calories',
+          numeric: true,
+        },
+        {
+          width: 120,
+          label: 'Fat\u00A0(g)',
+          dataKey: 'fat',
+          numeric: true,
+        },
+        {
+          width: 120,
+          label: 'Carbs\u00A0(g)',
+          dataKey: 'carbs',
+          numeric: true,
+        },
+        {
+          width: 120,
+          label: 'Protein\u00A0(g)',
+          dataKey: 'protein',
+          numeric: true,
+        },
+      ];
+    
+    const createData = (
+        id: number,
+        dessert: string,
+        calories: number,
+        fat: number,
+        carbs: number,
+        protein: number,
+    ): Data => {
+        return { id, dessert, calories, fat, carbs, protein };
+    };
+    const rows: Data[] = [];
+      
+    for (let i = 0; i < 200; i += 1) {
+        const randomSelection = sample[Math.floor(Math.random() * sample.length)];
+        rows.push(createData(i, ...randomSelection));
+    }
+
+    console.log(rows);
+    return (
+      <Paper style={{ height: 400, width: '100%' }}>
+        <StyledMuiVirtualizedTable
+          rowCount={rows.length}
+          rowGetter={({ index }) => rows[index]}
+          rowHeight={25}
+          columns={sampleColumns}
+        />
+      </Paper>
+    );
+  }
+  
