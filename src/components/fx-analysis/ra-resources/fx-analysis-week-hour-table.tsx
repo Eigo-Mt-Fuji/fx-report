@@ -1,9 +1,13 @@
 
 import * as React from 'react';
 import clsx from 'clsx';
-import { withStyles, WithStyles, Theme, createTheme } from '@material-ui/core/styles';
-import TableCell from '@material-ui/core/TableCell';
-import Paper from '@material-ui/core/Paper';
+//@material-ui/core -> @mui/material @material-ui/icons -> @mui/icons-material  https://zenn.dev/h_yoshikawa0724/articles/2021-09-26-material-ui-v5
+// https://mui.com/guides/migration-v4/#mui-material-styles
+import { withStyles, WithStyles } from '@mui/styles';
+import { Theme, createTheme } from '@mui/material/styles';
+
+import TableCell from '@mui/material/TableCell';
+import Paper from '@mui/material/Paper';
 import {
   AutoSizer,
   Column,
@@ -13,12 +17,13 @@ import {
 } from 'react-virtualized';
 
 interface Data {
-    calories: number;
-    carbs: number;
-    dessert: string;
-    fat: number;
-    id: number;
-    protein: number;
+    id: string;
+    time: string;
+    monday: number;
+    tuesday: number;
+    wednesday: number;
+    thursday: number;
+    friday: number;
 }
 interface ColumnData {
     dataKey: string;
@@ -30,7 +35,7 @@ interface ColumnData {
 interface Row {
     index: number;
 }
-interface MuiVirtualizedTableProps extends WithStyles<typeof styles> {
+interface MuiVirtualizedTableProps extends WithStyles<typeof styles>{
     columns: readonly ColumnData[];
     headerHeight?: number;
     onRowClick?: () => void;
@@ -79,7 +84,6 @@ const styles = (theme: Theme) => ({
 
 const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
 
-    console.log(props)
     const getRowClassName = ({ index }: Row) => {
         const { classes, onRowClick } = props;
         return clsx(classes.tableRow, classes.flexContainer, {
@@ -93,8 +97,11 @@ const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
         const className = clsx(classes['hoge'], classes.flexContainer, {
             [classes.noClick]: onRowClick == null,
         });
+        // TODO: セルの背景色を、値に応じて切り替える処理を実装
+        // 1列目はヘッダなのでセルの背景色は白色固定でOK
+        // 1列目の判定方法は、columnIndexが0の場合1列目とする(columnIndexは0始まりなので、1列目とはcolumnIndex=0であることと同義)
         // MuiVirtualizedTable-tableCell-49 MuiVirtualizedTable-flexContainer-45 MuiVirtualizedTable-noClick-50
-        if (columnIndex == 1) {
+        if (columnIndex == 0) {
             console.log(className);
             // console.log(`${classes['hoge']}`);
             // if (cellData >= 100) {
@@ -120,9 +127,10 @@ const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
     };
     
     const headerRenderer = ({label, columnIndex}: TableHeaderProps & { columnIndex: number }) => {
-
+        console.log(props);
         const { headerHeight, columns, classes } = props;
 
+        // TODO: もしかしてヘッダ不要?
         return (
           <TableCell
             component="div"
@@ -157,11 +165,8 @@ const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
                 return (
                 <Column
                     key={dataKey}
-                    headerRenderer={(headerProps) =>
-                    headerRenderer({
-                        ...headerProps,
-                        columnIndex: index,
-                    })
+                    headerRenderer={
+                        (headerProps) => headerRenderer({...headerProps, columnIndex: index,})
                     }
                     className={classes.flexContainer}
                     cellRenderer={cellRenderer}
@@ -182,70 +187,73 @@ const StyledMuiVirtualizedTable = withStyles(styles, { defaultTheme })(MuiVirtua
 export default function FxAnalysisWeekHourTable({data}: any) {
 
     // TODO: この部分を取引実績データから算出した曜日別・時間帯別の配列で置き換え
-    type Sample = [string, number, number, number, number];
+    type Sample = [string, number, number, number, number, number];
     const sample: readonly Sample[] = [
-        ['Frozen yoghurt', 159, 6.0, 24, 4.0],
-        ['Ice cream sandwich', 237, 9.0, 37, 4.3],
-        ['Eclair', 262, 16.0, 24, 6.0],
-        ['Cupcake', 305, 3.7, 67, 4.3],
-        ['Gingerbread', 356, 16.0, 49, 3.9],
+        ['10:00', 159, 6.0, 24, 4.0, 10.0],
+        ['11:00', 237, 9.0, 37, 4.3, 10.0],
+        ['12:00', 262, 16.0, 24, 6.0, 10.0],
+        ['13:00', 305, 3.7, 67, 4.3, 10.0],
+        ['14:00', 356, 16.0, 49, 3.9, 10.0],
     ];
     const sampleColumns = [
         {
+            width: 200,
+            label: '',
+            dataKey: 'time',
+        },  
+        {
           width: 200,
-          label: 'Dessert',
-          dataKey: 'dessert',
+          label: '月',
+          dataKey: 'monday',
         },
         {
           width: 120,
-          label: 'Calories\u00A0(g)',
-          dataKey: 'calories',
+          label: '火',
+          dataKey: 'tuesday',
           numeric: true,
         },
         {
           width: 120,
-          label: 'Fat\u00A0(g)',
-          dataKey: 'fat',
+          label: '水',
+          dataKey: 'wednesday',
           numeric: true,
         },
         {
           width: 120,
-          label: 'Carbs\u00A0(g)',
-          dataKey: 'carbs',
+          label: '木',
+          dataKey: 'thursday',
           numeric: true,
         },
         {
           width: 120,
-          label: 'Protein\u00A0(g)',
-          dataKey: 'protein',
+          label: '金',
+          dataKey: 'friday',
           numeric: true,
         },
       ];
     
-    const createData = (
-        id: number,
-        dessert: string,
-        calories: number,
-        fat: number,
-        carbs: number,
-        protein: number,
-    ): Data => {
-        return { id, dessert, calories, fat, carbs, protein };
-    };
-    const rows: Data[] = [];
-      
-    for (let i = 0; i < 200; i += 1) {
-        const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-        rows.push(createData(i, ...randomSelection));
-    }
+    const rows: Data[] = sample.map( (d: any, index: number) => {
+
+        return {
+            id: `${index}`,
+            time: d[0],
+            monday: d[1],
+            tuesday: d[2],
+            wednesday: d[3],
+            thursday: d[4],
+            friday: d[5]
+        } as Data
+    })
 
     console.log(rows);
     return (
-      <Paper style={{ height: 400, width: '100%' }}>
+      <Paper style={{ height: 500, width: '100%' }}>
         <StyledMuiVirtualizedTable
           rowCount={rows.length}
+          
           rowGetter={({ index }) => rows[index]}
-          rowHeight={25}
+          rowHeight={40}
+          headerHeight={40}
           columns={sampleColumns}
         />
       </Paper>
