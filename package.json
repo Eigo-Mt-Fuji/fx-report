@@ -12,11 +12,12 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "sls_deploy": "serverless"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.0",
     "@emotion/css": "^11.9.0",
+    "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@mapbox/mapbox-gl-geocoder": "4.7.0",
@@ -25,7 +26,7 @@
     "@mdx-js/react": "^1.6.22",
     "@mui/icons-material": "^5.6.0",
     "@mui/material": "^5.6.0",
-    "@mui/styles":"^5.6.0",
+    "@mui/styles": "^5.6.0",
     "@next/mdx": "12.1.4",
     "@turf/bbox": "^6.0.1",
     "bootstrap": "^4.6.0",
@@ -70,6 +71,8 @@
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^4.2.5",
+    "@serverless/cli": "^1.6.0",
+    "@serverless/components": "^3.18.2",
     "@types/gtag.js": "^0.0.10",
     "@types/holderjs": "^2.9.2",
     "@types/node": "17.0.23",
@@ -89,6 +92,7 @@
     "null-loader": "^4.0.1",
     "prettier": "2.6.1",
     "readline": "^1.3.0",
+    "serverless": "2.72.2",
     "tsc": "^1.20150623.0",
     "typescript": "4.5.5"
   },
