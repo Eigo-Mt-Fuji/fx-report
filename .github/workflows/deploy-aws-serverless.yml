@@ -1,0 +1,54 @@
+name: Deploy AWS Serverless
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      # https://github.blog/changelog/2022-01-13-github-actions-update-on-oidc-based-deployments-to-aws/
+      # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect
+      # https://github.com/aws-actions/configure-aws-credentials
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::047980477351:role/prdFxReportGithubWorkflow
+          aws-region: ap-northeast-1
+
+      - name: install serverlss v3
+        run: npm install -g serverless@3.12.0
+
+      - name: install @serverless/components v3
+        run: npm install -g @serverless/components@3.18.2
+
+      - name: install packages
+        run: yarn install
+
+      - name: check lint
+        run: yarn run lint
+
+      - name: build
+        env:
+          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}}
+          NEXT_PUBLIC_GRAPHCMS_ENDPOINT: ${{secrets.NEXT_PUBLIC_GRAPHCMS_ENDPOINT}}
+          NEXT_PUBLIC_FX_ANALYSIS_BACKEND_API_ENDPOINT: ${{secrets.NEXT_PUBLIC_FX_ANALYSIS_BACKEND_API_ENDPOINT}}
+          NEXT_PUBLIC_DATA_S3_BUCKET: ${{secrets.NEXT_PUBLIC_DATA_S3_BUCKET}}
+        run: yarn run build
+
+      - name: deploy 
+        env:
+          SERVERLESS_ACCESS_KEY: ${{secrets.SERVERLESS_ACCESS_KEY}}
+          SLS_STAGE: ${{secrets.SLS_STAGE}}
+          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}}
+          NEXT_PUBLIC_GRAPHCMS_ENDPOINT: ${{secrets.NEXT_PUBLIC_GRAPHCMS_ENDPOINT}}
+          NEXT_PUBLIC_FX_ANALYSIS_BACKEND_API_ENDPOINT: ${{secrets.NEXT_PUBLIC_FX_ANALYSIS_BACKEND_API_ENDPOINT}}
+          NEXT_PUBLIC_DATA_S3_BUCKET: ${{secrets.NEXT_PUBLIC_DATA_S3_BUCKET}}
+        run: yarn run sls_deploy

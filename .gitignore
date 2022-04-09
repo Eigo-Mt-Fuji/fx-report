@@ -27,7 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
-
+.env
 # vercel
 .vercel
 
@@ -42,3 +42,5 @@ __pycache__
 # terraform
 /terraform/components/**/.terraform
 /terraform/components/**/*.plan
+.serverless_nextjs/
+.serverless
