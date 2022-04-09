@@ -9,7 +9,10 @@
             },
             "Condition": {
                 "StringLike": {
-                    "${oidc_provider}:${oidc_claim}": "repo:${allowed_repo}:${allowed_refs}"
+                    "${oidc_provider}:${oidc_claim}": [
+                        "repo:${allowed_repo_fx_report}:${allowed_refs_fx_report}",
+                        "repo:${allowed_repo_fx_report_api}:${allowed_refs_fx_report_api}"
+                    ]
                 }
             }
         }

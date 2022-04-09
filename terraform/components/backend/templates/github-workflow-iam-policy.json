@@ -20,6 +20,140 @@
                 "s3:PutObject"
             ],
             "Resource": "arn:aws:s3:::${bucket_name}/*"
+        },
+
+        {
+            "Sid": "cloudformation",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:DescribeStackEvents",
+                "cloudformation:DeleteChangeSet",
+                "cloudformation:CreateChangeSet",
+                "cloudformation:UpdateChangeSet",
+                "cloudformation:ExecuteChangeSet",
+                "cloudformation:CreateStack",
+                "cloudformation:DeleteStack",
+                "cloudformation:UpdateStack",
+                "cloudformation:DescribeStackResources",
+                "cloudformation:DescribeStackResource",
+                "cloudformation:DescribeStacks",
+                "cloudformation:ListStackResources"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "iam0",
+            "Effect": "Allow",
+            "Action": [
+                "cloudformation:ValidateTemplate"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "s3",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*",
+                "s3:List*",
+                "s3:Put*",
+                "s3:CreateBucket",
+                "s3:DeleteBucket",
+                "s3:DeleteBucketPolicy",
+                "s3:DeleteObject"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "cloudwatch",
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeLogGroups",
+                "logs:CreateLogGroup",
+                "logs:DeleteLogGroup",
+                "logs:PutRetentionPolicy"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "cloudwatchevents",
+            "Effect": "Allow",
+            "Action": [
+                "events:PutRule",
+                "events:DescribeRule",
+                "events:DeleteRule",
+                "events:PutTargets",
+                "events:RemoveTargets"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "apigateway",
+            "Effect": "Allow",
+            "Action": [
+                "apigateway:*"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "lambda",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:GetFunction",
+                "lambda:DeleteFunction",
+                "lambda:CreateFunction",
+                "lambda:GetFunctionConfiguration",
+                "lambda:ListVersionsByFunction",
+                "lambda:AddPermission",
+                "lambda:RemovePermission",
+                "lambda:PublishVersion",
+                "lambda:UpdateFunctionCode",
+                "lambda:ListAliases",
+                "lambda:UpdateFunctionConfiguration"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "iam1",
+            "Effect": "Allow",
+            "Action": [
+                "iam:PassRole",
+                "iam:PutRolePolicy"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "cloudfront",
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:CreateInvalidation"
+            ],
+            "Resource": "arn:aws:cloudfront::047980477351:distribution/*"
+        },
+        {
+            "Sid": "ecs",
+            "Effect": "Allow",
+            "Action": [
+                "ecr:GetAuthorizationToken",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetRepositoryPolicy",
+                "ecr:DescribeRepositories",
+                "ecr:ListImages",
+                "ecr:DescribeImages",
+                "ecr:BatchGetImage",
+                "ecr:GetLifecyclePolicy",
+                "ecr:GetLifecyclePolicyPreview",
+                "ecr:ListTagsForResource",
+                "ecr:DescribeImageScanFindings",
+                "ecr:InitiateLayerUpload",
+                "ecr:UploadLayerPart",
+                "ecr:CompleteLayerUpload",
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:PutImage",
+                "ecs:UpdateService"
+            ],
+            "Resource": "*"
         }
     ]
 }

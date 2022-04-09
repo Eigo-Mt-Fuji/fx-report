@@ -7,8 +7,10 @@ resource "aws_iam_role" "this" {
         federated_provider_id = aws_iam_openid_connect_provider.this.id
         oidc_provider = "token.actions.githubusercontent.com"
         oidc_claim = "sub"
-        allowed_repo = var.repository_name
-        allowed_refs = "*"
+        allowed_repo_fx_report = var.repository_name_front
+        allowed_repo_fx_report_api = var.repository_name_api
+        allowed_refs_fx_report = "*"
+        allowed_refs_fx_report_api = "*"
     })
 
     tags = local.tags
