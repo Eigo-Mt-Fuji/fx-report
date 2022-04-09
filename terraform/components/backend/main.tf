@@ -10,6 +10,6 @@ terraform {
 locals {
   tags = {
     "env" = terraform.workspace
-    "repository" = var.repository_name
+    "project" = "fx-report"
   }
 }
