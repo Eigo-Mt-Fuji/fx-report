@@ -17,7 +17,6 @@ const theme = createTheme({
 const AdminApp = () => (
   <ThemeProvider theme={theme}>
     <Admin 
-      layout={MyLayout} 
       dashboard={MyDashboard} 
       dataProvider={dataProvider}
       disableTelemetry>
