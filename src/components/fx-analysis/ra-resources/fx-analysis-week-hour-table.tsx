@@ -1,13 +1,14 @@
-
 import * as React from 'react';
 import clsx from 'clsx';
-//@material-ui/core -> @mui/material @material-ui/icons -> @mui/icons-material  https://zenn.dev/h_yoshikawa0724/articles/2021-09-26-material-ui-v5
-// https://mui.com/guides/migration-v4/#mui-material-styles
-import { withStyles, WithStyles } from '@mui/styles';
-import { Theme, createTheme } from '@mui/material/styles';
-
 import TableCell from '@mui/material/TableCell';
 import Paper from '@mui/material/Paper';
+
+// @emotion/react is better than @emotion/css for next.js SSR https://emotion.sh/docs/@emotion/react
+// @emotion <ClassNames> component allows to create css className like vanilla Emotion(@emotion/css) https://emotion.sh/docs/class-names
+// workaround: use @jsxImportSource(instead of jsx) https://github.com/emotion-js/emotion/issues/2041
+import { css, ClassNames } from '@emotion/react'
+import { Theme, useTheme } from '@mui/material/styles';
+
 import {
   AutoSizer,
   Column,
@@ -35,7 +36,14 @@ interface ColumnData {
 interface Row {
     index: number;
 }
-interface MuiVirtualizedTableProps extends WithStyles<typeof styles>{
+
+// TODO: 明度を調整するにはhsl値を使うのがgood
+// https://www.w3schools.com/colors/colors_picker.asp
+// https://htmlcss.jp/css/background-color.html
+
+interface MuiVirtualizedTableProps {
+    
+    classes: any;
     columns: readonly ColumnData[];
     headerHeight?: number;
     onRowClick?: () => void;
@@ -43,56 +51,20 @@ interface MuiVirtualizedTableProps extends WithStyles<typeof styles>{
     rowGetter: (row: Row) => Data;
     rowHeight?: number;
 }
-// TODO: 明度を調整するにはhsl値を使うのがgood
-// https://www.w3schools.com/colors/colors_picker.asp
-// https://htmlcss.jp/css/background-color.html
-const styles = (theme: Theme) => ({
-    flexContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      boxSizing: 'border-box',
-    },
-    table: {
-      '& .ReactVirtualized__Table__headerRow': {
-        ...(theme.direction === 'rtl' && {
-          paddingLeft: '0 !important',
-        }),
-        ...(theme.direction !== 'rtl' && {
-          paddingRight: undefined,
-        }),
-      },
-    },
-    tableRow: {
-      cursor: 'pointer',
-    },
-    tableRowHover: {
-      '&:hover': {
-        backgroundColor: theme.palette.grey[200],
-      },
-    },
-    tableCell: {
-      flex: 1,
-    },
-    noClick: {
-      cursor: 'initial',
-    },
-    hoge: {
-      flex: 1,
-      backgroundColor: 'hsl(120, 100%, 95%)'
-    },
-} as const);
-
 const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
-
+    const classes = props.classes; 
+    // stylesに定義したスタイル定義を利用するには
+    // sCSS props.classes.クラス名 
+    const classNameForFlexContainer = classes.flexContainer;
     const getRowClassName = ({ index }: Row) => {
-        const { classes, onRowClick } = props;
+        const { onRowClick } = props;
         return clsx(classes.tableRow, classes.flexContainer, {
           [classes.tableRowHover]: index !== -1 && onRowClick != null,
         });
     };
     
     const cellRenderer: TableCellRenderer = ({ cellData, columnIndex }) => {
-        const { columns, classes, rowHeight, onRowClick } = props;
+        const { columns, rowHeight, onRowClick } = props;
         
         const className = clsx(classes['hoge'], classes.flexContainer, {
             [classes.noClick]: onRowClick == null,
@@ -128,7 +100,7 @@ const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
     
     const headerRenderer = ({label, columnIndex}: TableHeaderProps & { columnIndex: number }) => {
         console.log(props);
-        const { headerHeight, columns, classes } = props;
+        const { headerHeight, columns } = props;
 
         // TODO: もしかしてヘッダ不要?
         return (
@@ -144,7 +116,7 @@ const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
         );
     };
  
-    const { classes, columns, rowHeight, headerHeight, ...tableProps } = props;
+    const { columns, rowHeight, headerHeight, ...tableProps } = props;
     console.log(rowHeight);
     return (
         <AutoSizer>
@@ -181,10 +153,8 @@ const MuiVirtualizedTable = (props: MuiVirtualizedTableProps) => {
     );
 }
 
-const defaultTheme = createTheme();
-const StyledMuiVirtualizedTable = withStyles(styles, { defaultTheme })(MuiVirtualizedTable);
-  
 export default function FxAnalysisWeekHourTable({data}: any) {
+    const theme: Theme = useTheme()
 
     // TODO: この部分を取引実績データから算出した曜日別・時間帯別の配列で置き換え
     type Sample = [string, number, number, number, number, number];
@@ -248,14 +218,59 @@ export default function FxAnalysisWeekHourTable({data}: any) {
     console.log(rows);
     return (
       <Paper style={{ height: 500, width: '100%' }}>
-        <StyledMuiVirtualizedTable
-          rowCount={rows.length}
-          
-          rowGetter={({ index }) => rows[index]}
-          rowHeight={40}
-          headerHeight={40}
-          columns={sampleColumns}
-        />
+        <ClassNames>
+            {
+                ( {css, cx} : any ) => {
+
+                    const classes = {
+                        flexContainer: css`
+                            display: flex;
+                            align-items: center;
+                            box-sizing: border-box;
+                        `,
+                        table: theme.direction === 'rtl' ? css`
+                            .ReactVirtualized__Table__headerRow & {
+                                padding-left: 0 !important
+                            }
+                        ` : css`
+                            .ReactVirtualized__Table__headerRow & {
+                                padding-right: undefined
+                            }
+                        `,
+                        tableRow: css`
+                            cursor: pointer;
+                        `,
+                        tableRowHover: css`
+                            &:hover {
+                                background-color: ${theme.palette.grey[200]},
+                            }
+                        `,
+                        tableCell: css`
+                            flex: 1;
+                        `,
+                        noClick: css`
+                            cursor: 'initial';
+                        `,
+                        hoge: css`
+                            flex: 1;
+                            background-color: hsl(120, 100%, 95%);
+                        `                                                        
+    
+                    };
+                    return (
+                        <MuiVirtualizedTable
+                            classes={classes}
+                            rowCount={rows.length}
+                            rowGetter={({ index }) => rows[index]}
+                            rowHeight={40}
+                            headerHeight={40}
+                            columns={sampleColumns}
+                        ></MuiVirtualizedTable>
+                    );
+    
+                }
+            }
+        </ClassNames>
       </Paper>
     );
   }

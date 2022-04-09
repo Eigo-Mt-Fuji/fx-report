@@ -1,6 +1,31 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 const _ = require('lodash');
+
+// TODO: @emotion/cssを使ったclassNames定義方法は、できる限りnext.jsでは基本的にやらないほうがよい。@emotion/reactのClassNamesコンポーネントを使って置き換える
+import { css, cx } from '@emotion/css'
+const classes = {
+    chartDescription: css`
+        font-size: 13px;
+    `,
+    chartTitle: css`
+        font-size: 25px;
+        color: #ff0000;
+    `
+};
+
+// TODO: @emotion/styledを使ってスタイル定義するのは推奨されてるのでやっても問題はないけど、@emotion/reactでも同じことができるので、どちらかに寄せたほうが良い
+// whatis @emotion/styled: https://emotion.sh/docs/styled
+import styled from '@emotion/styled'
+const Button = styled.button`
+  color: ${ (props:any) => props.hoge ? 'blue' : 'turquoise'};
+`
+
+const MyResourcerContainer = styled.div( (props:any) => ({
+  display: 'block',
+  width: '100%',
+  height: 800,
+}))
 
 const CustomizedDot = (props: any) => {
     const { cx, cy, stroke, payload, value } = props;
@@ -57,27 +82,33 @@ const FxAnalysisWeekHourChart = (props: any) => {
     });
     // TODO: how to expand LineChart to fill the screen? now LineChart width is fixed as 508px(why..?)
     return (
-        <div style={{ width: '100%', height: 500 }}>
-            <ResponsiveContainer width="100%" height="100%" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <LineChart height={400}>
-                <CartesianGrid strokeDasharray="5 5" />
-                <XAxis dataKey="time" type="category" allowDuplicatedCategory={false} />
-                <YAxis dataKey="value" />
-                <Tooltip />
-                <Legend />
-                {series.map((s) => (
-                    <Line 
-                        stroke={s.strokeColor} 
-                        strokeWidth={1} 
-                        dataKey="value" 
-                        data={s.data} 
-                        name={s.name} 
-                        key={s.name} 
-                        dot={CustomizedDot}/>
-                ))}
-                </LineChart>
-            </ResponsiveContainer>
-        </div>
+        <>
+            <MyResourcerContainer>
+                <div className={classes.chartTitle}>曜日別・時間帯別 損益</div>
+                <p className={classes.chartDescription}>※2022年3月28日までの実績をもとに集計しています。</p>
+                <Button onClick={() => {alert('Yes!');}}>詳細</Button>
+
+                <ResponsiveContainer width="100%" height="100%">
+                    <LineChart height={550}>
+                    <CartesianGrid strokeDasharray="5 5" />
+                    <XAxis dataKey="time" type="category" allowDuplicatedCategory={false} />
+                    <YAxis dataKey="value" />
+                    <Tooltip />
+                    <Legend />
+                    {series.map((s) => (
+                        <Line 
+                            stroke={s.strokeColor} 
+                            strokeWidth={1} 
+                            dataKey="value" 
+                            data={s.data} 
+                            name={s.name} 
+                            key={s.name} 
+                            dot={CustomizedDot}/>
+                    ))}
+                    </LineChart>
+                </ResponsiveContainer>
+            </MyResourcerContainer>
+        </>
     );
 }
 export default FxAnalysisWeekHourChart;
