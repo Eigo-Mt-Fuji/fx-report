@@ -30,10 +30,10 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          commit-message: Update src/data/fx_transactions {{ steps.datetime.outputs.value }}
-          title: Update src/data/fx_transactions {{ steps.datetime.outputs.value }}
+          commit-message: Update src/data/fx_transactions ${{ steps.datetime.outputs.value }}
+          title: Update src/data/fx_transactions ${{ steps.datetime.outputs.value }}
           body: |
-            Update Update src/data/fx_transactions {{ steps.datetime.outputs.value }}
+            Update src/data/fx_transactions ${{ steps.datetime.outputs.value }}
           labels: |
             workflow
           committer: GitHub <noreply@github.com>
