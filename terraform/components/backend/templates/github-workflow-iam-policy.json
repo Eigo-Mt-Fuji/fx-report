@@ -127,11 +127,24 @@
             "Sid": "cloudfront",
             "Effect": "Allow",
             "Action": [
-                "cloudfront:CreateInvalidation",
-                "cloudfront:CreateCloudFrontOriginAccessIdentity"
+                "cloudfront:CreateInvalidation"
             ],
             "Resource": "arn:aws:cloudfront::047980477351:distribution/*"
         },
+        {
+            "Sid": "cloudfrontOai",
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:CreateCloudFrontOriginAccessIdentity",
+                "cloudfront:GetCloudFrontOriginAccessIdentity",
+                "cloudfront:ListCloudFrontOriginAccessIdentities",
+                "cloudfront:UpdateCloudFrontOriginAccessIdentity",
+                "cloudfront:DeleteCloudFrontOriginAccessIdentity"
+            ],
+            "Resource": "arn:aws:cloudfront::047980477351:distribution/*"
+        },
+        
+
         {
             "Sid": "ecs",
             "Effect": "Allow",
