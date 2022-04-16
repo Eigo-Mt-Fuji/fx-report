@@ -118,7 +118,8 @@
             "Action": [
                 "iam:CreateRole",
                 "iam:PassRole",
-                "iam:PutRolePolicy"
+                "iam:PutRolePolicy",
+                "iam:AttachRolePolicy"
             ],
             "Resource": "*"
         },
