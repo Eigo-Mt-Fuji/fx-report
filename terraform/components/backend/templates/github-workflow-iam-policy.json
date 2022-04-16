@@ -141,7 +141,7 @@
                 "cloudfront:UpdateCloudFrontOriginAccessIdentity",
                 "cloudfront:DeleteCloudFrontOriginAccessIdentity"
             ],
-            "Resource": "arn:aws:cloudfront::047980477351:distribution/*"
+            "Resource": "*"
         },
         
 
