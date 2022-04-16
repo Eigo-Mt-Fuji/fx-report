@@ -44,9 +44,16 @@ export default  ({ children }) => <Layout meta={meta}>{children}</Layout>
 
 ## 月次成績
 
+
+### 2022-04
+
+<FxMonthlyReport data={props.data} month="2022/04" bars={["profit", "pips" ]} aggregate="daily"/>
+
+<FxSummaryView data={props.data}  month="2022/04" />
+
 ### 2022-03
 
-<FxMonthlyReport data={props.data} month="2022/03" bars={["profit", "pips" ]} aggregate="daily"/>
+<FxMonthlyReport data={props.data} month="2022/04" bars={["profit", "pips" ]} aggregate="weekly"/>
 
 <FxSummaryView data={props.data}  month="2022/03" />
 
