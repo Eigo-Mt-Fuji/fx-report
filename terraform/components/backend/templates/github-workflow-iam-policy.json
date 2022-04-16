@@ -127,7 +127,13 @@
             "Sid": "cloudfront",
             "Effect": "Allow",
             "Action": [
-                "cloudfront:CreateInvalidation"
+                "cloudfront:CreateInvalidation",
+                "cloudfront:CreateDistribution",
+                "cloudfront:TagResource",
+                "cloudfront:UpdateDistribution",
+                "cloudfront:DeleteDistribution",
+                "cloudfront:UntagResource",
+                "cloudfront:ListTagsForResource"
             ],
             "Resource": "arn:aws:cloudfront::047980477351:distribution/*"
         },
