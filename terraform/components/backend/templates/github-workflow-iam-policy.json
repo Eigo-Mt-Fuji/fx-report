@@ -116,6 +116,7 @@
             "Sid": "iam1",
             "Effect": "Allow",
             "Action": [
+                "iam:CreateRole",
                 "iam:PassRole",
                 "iam:PutRolePolicy"
             ],
