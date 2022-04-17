@@ -108,7 +108,8 @@
                 "lambda:PublishVersion",
                 "lambda:UpdateFunctionCode",
                 "lambda:ListAliases",
-                "lambda:UpdateFunctionConfiguration"
+                "lambda:UpdateFunctionConfiguration",
+                "lambda:EnableReplication*"
             ],
             "Resource": "*"
         },
