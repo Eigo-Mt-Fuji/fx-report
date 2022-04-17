@@ -7,6 +7,9 @@ fxReportApp:
   component: "@sls-next/serverless-component@3.7.0"
   name: fx-report
   inputs:
+    cloudfront:
+      # if you want to use an existing cloudfront distribution, provide it here
+      distributionId: E2BDRFRZJM9T0Y
     bucketRegion: ap-northeast-1
     policy: "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
     domain: ["welcome", "efgriver.com"] # [ sub-domain, domain ]
