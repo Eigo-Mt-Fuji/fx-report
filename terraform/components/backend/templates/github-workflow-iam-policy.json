@@ -156,7 +156,7 @@
             "Action": [
                 "route53:ChangeResourceRecordSets"
             ],
-            "Resource": "arn:aws:route53:::hostedzoneZ08256261BDETXBUSKFLN"
+            "Resource": "arn:aws:route53:::hostedzone/Z08256261BDETXBUSKFLN"
         },
         {
             "Sid": "ecs",
