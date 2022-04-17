@@ -150,8 +150,14 @@
             ],
             "Resource": "*"
         },
-        
-
+        {
+            "Sid": "route53",
+            "Effect": "Allow",
+            "Action": [
+                "route53:ChangeResourceRecordSets"
+            ],
+            "Resource": "arn:aws:route53:::hostedzoneZ08256261BDETXBUSKFLN"
+        },
         {
             "Sid": "ecs",
             "Effect": "Allow",
