@@ -108,7 +108,8 @@
                 "lambda:PublishVersion",
                 "lambda:UpdateFunctionCode",
                 "lambda:ListAliases",
-                "lambda:UpdateFunctionConfiguration"
+                "lambda:UpdateFunctionConfiguration",
+                "lambda:EnableReplication*"
             ],
             "Resource": "*"
         },
@@ -116,8 +117,10 @@
             "Sid": "iam1",
             "Effect": "Allow",
             "Action": [
+                "iam:CreateRole",
                 "iam:PassRole",
-                "iam:PutRolePolicy"
+                "iam:PutRolePolicy",
+                "iam:AttachRolePolicy"
             ],
             "Resource": "*"
         },
@@ -125,9 +128,35 @@
             "Sid": "cloudfront",
             "Effect": "Allow",
             "Action": [
-                "cloudfront:CreateInvalidation"
+                "cloudfront:CreateInvalidation",
+                "cloudfront:CreateDistribution",
+                "cloudfront:TagResource",
+                "cloudfront:UpdateDistribution",
+                "cloudfront:DeleteDistribution",
+                "cloudfront:UntagResource",
+                "cloudfront:ListTagsForResource"
             ],
             "Resource": "arn:aws:cloudfront::047980477351:distribution/*"
+        },
+        {
+            "Sid": "cloudfrontOai",
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:CreateCloudFrontOriginAccessIdentity",
+                "cloudfront:GetCloudFrontOriginAccessIdentity",
+                "cloudfront:ListCloudFrontOriginAccessIdentities",
+                "cloudfront:UpdateCloudFrontOriginAccessIdentity",
+                "cloudfront:DeleteCloudFrontOriginAccessIdentity"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "route53",
+            "Effect": "Allow",
+            "Action": [
+                "route53:ChangeResourceRecordSets"
+            ],
+            "Resource": "arn:aws:route53:::hostedzone/Z08256261BDETXBUSKFLN"
         },
         {
             "Sid": "ecs",

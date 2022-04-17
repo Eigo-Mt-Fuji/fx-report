@@ -7,9 +7,11 @@ fxReportApp:
   component: "@sls-next/serverless-component@3.7.0"
   name: fx-report
   inputs:
+    cloudfront:
+      # if you want to use an existing cloudfront distribution, provide it here
+      distributionId: E2BDRFRZJM9T0Y
     bucketRegion: ap-northeast-1
     policy: "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-    # TODO: fix domain https://github.com/serverless-nextjs/serverless-next.js#custom-domain-name
     domain: ["welcome", "efgriver.com"] # [ sub-domain, domain ]
     domainMinimumProtocolVersion: "TLSv1.2_2021"
     certificateArn: "arn:aws:acm:us-east-1:047980477351:certificate/91defbde-5ced-4c62-b817-c4390fa4cbf7"
