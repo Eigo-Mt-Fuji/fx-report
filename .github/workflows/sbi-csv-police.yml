@@ -4,9 +4,9 @@ on:
     types:
       - opened
     branches:
-      - 'Eigo-Mt-Fuji-patch-*'
+      - Eigo-Mt-Fuji-patch-1
     paths:
-      - 'downloads/sbi/*.csv'
+      - downloads/sbi/*.csv
 jobs:
   sbi-csv-police:
     runs-on: ubuntu-latest
