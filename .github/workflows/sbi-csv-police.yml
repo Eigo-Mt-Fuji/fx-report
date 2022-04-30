@@ -49,4 +49,4 @@ jobs:
           committer_name: Eigo-Mt-Fuji
           committer_email: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           cwd:  '.'
-          push: 'HEAD:${{ env.BRANCH_NAME }}'
+          push: 'origin HEAD:${{ env.BRANCH_NAME }}'
