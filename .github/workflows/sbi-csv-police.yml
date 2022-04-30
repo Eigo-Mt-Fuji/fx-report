@@ -31,7 +31,12 @@ jobs:
       - name: Get current datetime
         id: datetime
         run: echo "::set-output name=value::$(date +'%Y-%m-%d %H:%M:%S')"
-
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+      - name: Debug
+        run: echo ${{ env.BRANCH_NAME }}
       - uses: EndBug/add-and-commit@v9 # You can change this to use a specific version.
         with:
           add: 'src/data/fx_transactions/*'
@@ -44,4 +49,4 @@ jobs:
           committer_name: Eigo-Mt-Fuji
           committer_email: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           cwd:  '.'
-          push: true
+          push: 'HEAD:${{ env.BRANCH_NAME }}'
