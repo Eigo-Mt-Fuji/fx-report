@@ -1,7 +1,7 @@
 declare let window: any;
 import { createContext, useContext, useState } from "react";
 import Web3 from "web3";
-import PaymentToken from "../abis/PaymentToken.json";
+import PaymentToken from "../../abis/PaymentToken.json";
 
 interface DataContextProps {
   account: string;
@@ -33,7 +33,7 @@ export const useProviderData = () => {
         var allAccounts = await web3.eth.getAccounts();
         setAccount(allAccounts[0]);
   
-        const paymentTokenData = PaymentToken.networks["80001"];
+        const paymentTokenData: any = PaymentToken.networks["80001"];
         if (paymentTokenData) {
           var paymentTokenInstance = new web3.eth.Contract(
             PaymentToken.abi,
